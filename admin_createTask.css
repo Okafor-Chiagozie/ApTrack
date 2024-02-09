@@ -1,0 +1,196 @@
+:root{
+    --mainBlue: #465a65;
+    --secondBlue: #60717b;
+    --thirdBlue: #829097;
+    --darkBrown: #635329;
+    --firstGrey: #686868;
+    --firstGreySub: #222544;
+    --seconGrey: #f2f2f2;
+    --backgroundGrey: #e6e7ee;
+    --thirdGrey: #959595;
+}
+
+
+
+/* ADMIN DASHBOARD STYLING [=================================================] */
+
+.mainDiv .mainSection .firstSec>nav{
+    margin-top: 5px;
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-bottom: 5px;
+    position: relative;
+    cursor: pointer;
+}
+
+.mainDiv .mainSection .firstSec>nav>span{
+    font-size: small;
+    padding: 0px 10px 0px;
+}
+
+.mainDiv .mainSection .firstSec>nav>hr{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 45%;
+    border: 1.5px solid green;
+    margin-left: 5px;
+    transition: 0.5s;
+}
+
+/* First section inner_section starts ===================*/
+.mainDiv .mainSection .firstSec .container{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    /* border: 1px solid red; */
+}
+
+.mainDiv .mainSection .firstSec .container .myForm{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.mainDiv .mainSection .firstSec .container .myForm>section{
+    width: 50%;
+    height: auto;
+    margin: 5px 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+.mainDiv .mainSection .firstSec .container .myForm>section>label{
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.mainDiv .mainSection .firstSec .container .myForm>section>input{
+    width: 100%;
+    height: 40px;
+    background-color: var(--seconGrey);
+    /* border: 1px solid var(--firstGrey); */
+    border: none;
+    border-radius: 5px;
+    padding-left: 20px;
+}
+
+.mainDiv .mainSection .firstSec .container .myForm>section>textarea{
+    width: 100%;
+    background-color: var(--seconGrey);
+    border: none;
+    border-radius: 5px;
+    padding-left: 20px;
+    padding-top: 10px;
+}
+
+.mainDiv .mainSection .firstSec .container .myForm>section>input:focus, .mainDiv .mainSection .firstSec .container .myForm>section>textarea:focus{
+    outline: none;
+    background-color: white;
+}
+
+.mainDiv .mainSection .firstSec .container .myForm .profilePic>input{
+    padding-top: 10px;
+}
+
+
+.mainDiv .mainSection .firstSec .container .myForm>input{
+    position: fixed;
+    bottom: 20%;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin-right: 10%;
+    background-color: var(--mainBlue);
+    color: white;
+    text-decoration: none;
+    box-shadow: 0px 0px 10px grey;
+    border-radius: 5px;
+    border: none;
+}
+
+.mainDiv .mainSection .firstSec .container .myForm>input:hover{
+    font-size: medium;
+}
+
+
+/* Con2 */
+.mainDiv .mainSection .firstSec .con2{
+    display: none;
+}
+
+.mainDiv .mainSection .firstSec .con2 .taskCon{
+    width: 99%;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 5px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    padding: 5px;
+    /* border: 1px solid red; */
+}
+
+.mainDiv .mainSection .firstSec .con2 .taskCon>h1{
+    border-bottom: 2px dashed black;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+
+.mainDiv .mainSection .firstSec .con2 .taskCon>p{
+    width: 100%;
+    height: auto;
+}
+
+.mainDiv .mainSection .firstSec .con2 .taskCon>section{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.mainDiv .mainSection .firstSec .con2 .taskCon>section>span{
+    margin: 5px;
+    font-weight: bold;
+    color: var(--mainBlue);
+}
+
+.mainDiv .mainSection .firstSec .con2 .taskCon>section>button{
+    align-self: flex-end;
+    padding: 7px 10px 7px;
+    cursor: pointer;
+    background-color: red;
+    color: white;
+    border: 1px solid red;
+    border-radius: 5px;
+}
+
+.mainDiv .mainSection .firstSec .con2 .taskCon>section>button:hover{
+    background-color: var(--backgroundGrey);
+    color: red;
+}
+
+
+
+
+@media only screen and (max-width: 500px) {
+    .mainDiv .mainSection .firstSec .container .myForm>section{
+        width: 75%;
+    }
+}

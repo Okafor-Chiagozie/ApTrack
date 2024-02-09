@@ -1,0 +1,77 @@
+:root{
+    --mainBlue: #465a65;
+    --secondBlue: #60717b;
+    --thirdBlue: #829097;
+    --darkBrown: #635329;
+    --firstGrey: #686868;
+    --firstGreySub: #222544;
+    --seconGrey: #f2f2f2;
+    --backgroundGrey: #e6e7ee;
+    --thirdGrey: #959595;
+}
+
+
+
+/* USER PROFILE STYLING [=================================================] */
+
+/* First section inner_section starts ===================*/
+.mainDiv .mainSection .firstSec .container{
+    width: 99%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 5px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    padding: 5px;
+}
+
+.mainDiv .mainSection .firstSec .container>span{
+    margin-top: 10px;
+}
+
+.mainDiv .mainSection .firstSec .container>span .one{
+    font-weight: bold;
+}
+
+.mainDiv .mainSection .firstSec .container>section{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 10px;
+    width: 100%;
+    height: auto;
+}
+
+.mainDiv .mainSection .firstSec .container>section>span{
+    padding: 7px 10px 7px;
+    margin: 2px;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    border: 1px solid var(--backgroundGrey);
+    font-size: small;
+    cursor: pointer;
+}
+
+.mainDiv .mainSection .firstSec .container>section .accept{
+    background-color: green;
+}
+
+.mainDiv .mainSection .firstSec .container>section .accept:hover{
+    color: green;
+    background-color: var(--backgroundGrey);
+    border: 1px solid green;
+}
+
+.mainDiv .mainSection .firstSec .container>section .decline{
+    background-color: red;
+}
+
+.mainDiv .mainSection .firstSec .container>section .decline:hover{
+    color: red;
+    background-color: var(--backgroundGrey);
+    border: 1px solid red;
+}

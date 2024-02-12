@@ -1,10 +1,8 @@
 <?php
 
-require("scripts/dbConnect.php");
+require("scripts/config.php");
 include("scripts/functions.php");
-
 session_start();
-
 
 $username = $firstname = $lastname = $email = $password = $confirm = "";
 
@@ -48,29 +46,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    }
 }
 
-
 // Inserting into the database ==================================================
 if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($password)) {
 
    dbInsert($firstname, $lastname, $email, $password);
 }
 
-
-
 ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
-
    <head>
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>ApTrack</title>
-      <link rel="stylesheet" href="fontawesome-free-6.1.1-web/css/all.css">
-      <link rel="stylesheet" href="css/sign_up.css">
-      <link rel="stylesheet" href="fmworks/toastr.css">
+      <title>Register - ApTrack</title>
+      <link rel="stylesheet" href="assets/fontawesome-free-6.1.1-web/css/all.css">
+      <link rel="stylesheet" href="assets/css/user/sign-up.css">
+      <link rel="stylesheet" href="assets/libraries/toastr.css">
    </head>
 
    <body>
@@ -78,7 +72,8 @@ if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($passwor
          <section class="section1">
             <section class="mainPart">
                <section class="logoSec">
-                  <img src="photos/light.png" alt="Logo Image"> ApTrack
+                  <img src="assets/images/light.png" alt="Logo Image"> 
+                  <h1>ApTrack</h1>
                </section>
 
                <section class="introText">
@@ -86,7 +81,7 @@ if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($passwor
                </section>
 
                <section class="imgSec">
-                  <img src="photos/Creative team-amico.png" alt="Introduction Image">
+                  <img src="assets/images/Creative team-amico.png" alt="Introduction Image">
                </section>
             </section>
          </section>
@@ -94,16 +89,15 @@ if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($passwor
          <section class="section2">
             <section class="logoSec">
                <section>
-                  <img src="photos/light.png" alt="Logo Image">
+                  <img src="assets/images/dark.png" alt="Logo Image">
                </section>
+               <h1>ApTrack</h1>
             </section>
 
-
-            <!-- form action -->
             <form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" class="myForm">
                <section class="formHeading">
                   <h1>Create an account</h1>
-                  <span>Already have an account? <a href="auth_pages/sign_in.php">Login</a></span>
+                  <span>Already have an account? <a href="sign-in.php">Login</a></span>
                </section>
 
                <section class="formItem">
@@ -132,7 +126,6 @@ if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($passwor
                         <input type="password" name="confirm" required placeholder="Confirm your Password" autocomplete maxlength="20" minlength="6">
                      </section>
                   </section>
-
                   <?php 
                      if (isset($_SESSION['differentPassword']) && ($_SESSION["differentPassword"] == "Yes")) {
                      echo "<span class='error'>Both passwords do not match</span>";
@@ -144,8 +137,9 @@ if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($passwor
 
                      <span>
                         By creating an account you agree to the Terms
-                        of Service and Conditions and Privacy Policy</span>
+                        of Service and Conditions and Privacy Policy
                      </span>
+                  </span>
                </section>
 
                <section class="submitButton">
@@ -165,14 +159,13 @@ if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($passwor
             </form>
 
             <section class="footerImg">
-               <img src="photos/Design community-amico.png" alt="Footer Image">
+               <img src="assets/images/Design community-amico.png" alt="Footer Image">
             </section>
          </section>
-
       </div>
 
-      <script src="fmworks/jquery.js"></script>
-      <script src="fmworks/toastr.min.js"></script>
+      <script src="assets/libraries/jquery.js"></script>
+      <script src="assets/libraries/toastr.min.js"></script>
 
       <!-- Toast alert  -->
       <?php
@@ -186,7 +179,5 @@ if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($passwor
          $_SESSION["regFailed"] = "No";
       }
       ?>
-
    </body>
-
 </html>

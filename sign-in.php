@@ -9,9 +9,9 @@ session_start();
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>ApTrack</title>
-      <link rel="stylesheet" href="../fontawesome-free-6.1.1-web/css/all.css">
-      <link rel="stylesheet" href="../css/sign_in.css">
+      <title>Login - ApTrack</title>
+      <link rel="stylesheet" href="assets/fontawesome-free-6.1.1-web/css/all.css">
+      <link rel="stylesheet" href="assets/css/user/sign-in.css">
    </head>
 
    <body>
@@ -19,7 +19,8 @@ session_start();
          <section class="section1">
             <section class="mainPart">
                <section class="logoSec">
-                  <img src="../photos/light.png" alt="Logo Image">
+                  <img src="assets/images/light.png" alt="Logo Image">
+                  <h1>ApTrack</h1>
                </section>
 
                <section class="introText">
@@ -27,7 +28,7 @@ session_start();
                </section>
 
                <section class="imgSec">
-                  <img src="../photos/Collab-pana.png" alt="Introduction Image" id="loginImage">
+                  <img src="assets/images/Collab-pana.png" alt="Introduction Image" id="loginImage">
                </section>
             </section>
          </section>
@@ -35,8 +36,9 @@ session_start();
          <section class="section2">
             <section class="logoSec">
                <section>
-                  <img src="../photos/light.png" alt="Logo Image">
+                  <img src="assets/images/dark.png" alt="Logo Image">
                </section>
+               <h1>ApTrack</h1>
             </section>
 
             <div class="myFormSection">
@@ -51,7 +53,7 @@ session_start();
                   </span>
                </section>
 
-               <form action="../scripts/validateUser.php" method="post" id="user" class="myForm">
+               <form action="scripts/validateUser.php" method="post" id="user" class="myForm">
                   <section class="formItem">
                      <label for="userEmail">Email</label>
                      <input type="email" name="userEmail" required placeholder="Your Email" 
@@ -75,7 +77,7 @@ session_start();
                            <span>Remember me</span>
                         </span>
 
-                        <a href="../auth_pages/email_verification.php">Forgot Password?</a>
+                        <a href="pages/auth/verify-email.php">Forgot Password?</a>
                      </span>
                   </section>
 
@@ -83,7 +85,7 @@ session_start();
                      <input type="submit" value="Login" name="userLogin">
 
                      <span>
-                        <span>Don't have an account? <a href="sign_up.php">Register</a></span>
+                        <span>Don't have an account? <a href="index.php">Register</a></span>
                      </span>
                   </section>
 
@@ -100,7 +102,7 @@ session_start();
                </form>
 
 
-               <form action="../scripts/validateAdmin.php" method="post" id="admin" class="myForm">
+               <form action="scripts/validateAdmin.php" method="post" id="admin" class="myForm">
                   <section class="formItem">
                      <label for="adminEmail">Email</label>
                      <input type="email" name="adminEmail" required placeholder="Your Email" 
@@ -124,7 +126,7 @@ session_start();
                            <span>Remember me</span>
                         </span>
 
-                        <a href="../auth_pages/email_verification.php">Forgot Password?</a>
+                        <a href="pages/auth/verify-email.php">Forgot Password?</a>
                      </span>
                   </section>
 
@@ -145,12 +147,11 @@ session_start();
             </div>
 
             <section class="footerImg">
-               <img src="../photos/Design community-amico.png" alt="Footer Image">
+               <img src="assets/images/Design community-amico.png" alt="Footer Image">
             </section>
          </section>
       </div>
 
-      <script src="../js/sign_in.js"></script>
+      <script src="assets/js/sign-in.js"></script>
    </body>
-
 </html>

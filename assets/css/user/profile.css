@@ -1,0 +1,87 @@
+:root{
+    --mainBlue: #465a65;
+    --secondBlue: #60717b;
+    --thirdBlue: #829097;
+    --darkBrown: #635329;
+    --firstGrey: #686868;
+    --firstGreySub: #222544;
+    --seconGrey: #f2f2f2;
+    --backgroundGrey: #e6e7ee;
+    --thirdGrey: #959595;
+}
+
+
+
+/* USER PROFILE STYLING [=================================================] */
+
+/* First section inner_section starts ===================*/
+.mainDiv .mainSection .firstSec .container{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    position: relative;
+    /* border: 1px solid red; */
+}
+
+.mainDiv .mainSection .firstSec .container .imgSec{
+    width: 30%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 3px;
+}
+
+.mainDiv .mainSection .firstSec .container .imgSec>img{
+    width: 100%;
+    height: fit-content;
+    border-radius: 10px;
+    margin: 3px;
+    padding: 5px;
+}
+
+.mainDiv .mainSection .firstSec .container>span{
+    margin-top: 20px;
+}
+
+.mainDiv .mainSection .firstSec .container>span .one{
+    font-weight: bold;
+}
+
+.mainDiv .mainSection .firstSec .container .edit{
+    position: fixed;
+    bottom: 20%;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin-right: 10%;
+    background-color: var(--mainBlue);
+    color: white;
+    text-decoration: none;
+    box-shadow: 0px 0px 10px grey;
+    border-radius: 5px;
+    font-size: small;
+}
+
+.mainDiv .mainSection .firstSec .container .edit:hover{
+    font-size: medium;
+}
+
+.mainDiv .mainSection .firstSec .container .edit>i{
+    padding-right: 5px;
+}
+
+
+@media only screen and (max-width:800px){
+    .mainDiv .mainSection .firstSec .container .imgSec{
+        width: 50%;
+    }
+}

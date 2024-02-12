@@ -1,0 +1,56 @@
+:root{
+    --mainBlue: #465a65;
+    --secondBlue: #60717b;
+    --thirdBlue: #829097;
+    --darkBrown: #635329;
+    --firstGrey: #686868;
+    --firstGreySub: #222544;
+    --seconGrey: #f2f2f2;
+    --backgroundGrey: #e6e7ee;
+    --thirdGrey: #959595;
+}
+
+
+
+/* USER PROFILE STYLING [=================================================] */
+
+/* First section inner_section starts ===================*/
+.mainDiv .mainSection .firstSec .container{
+    width: 99%;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 5px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    padding: 5px;
+    /* border: 1px solid red; */
+}
+
+.mainDiv .mainSection .firstSec .container>h1{
+    border-bottom: 2px dashed black;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+
+.mainDiv .mainSection .firstSec .container>p{
+    width: 100%;
+    height: auto;
+}
+
+.mainDiv .mainSection .firstSec .container>section{
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.mainDiv .mainSection .firstSec .container>section>span{
+    margin: 5px;
+    font-weight: bold;
+    color: var(--mainBlue);
+}

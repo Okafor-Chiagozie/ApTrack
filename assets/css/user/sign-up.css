@@ -1,0 +1,385 @@
+* {
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+   overflow-x: hidden;
+   font-family: sans-serif;
+}
+
+@font-face {
+   font-family: lily;
+   src: url(../font/LilyScriptOne-Regular.ttf);
+}
+
+:root {
+   --mainBlue: #465a65;
+   --secondBlue: #60717b;
+   --thirdBlue: #829097;
+   --darkBrown: #635329;
+   --firstGrey: #686868;
+   --firstGreySub: #222544;
+   --seconGrey: #f2f2f2;
+   --backgroundGrey: #e6e7ee;
+   --thirdGrey: #959595;
+}
+
+/* var(--blue); */
+
+
+body {
+   background-color: var(--backgroundGrey);
+}
+
+.mainDiv {
+   width: 100%;
+   height: auto;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+/* section1 Start ================================ */
+.mainDiv .section1 {
+   position: relative;
+   width: 50%;
+   min-height: 100vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   background: radial-gradient(circle, var(--thirdBlue), var(--secondBlue), var(--mainBlue));
+   border-bottom-right-radius: 50%;
+   border-top-right-radius: 50%;
+   padding-left: 50px;
+}
+
+.mainDiv .section1 .mainPart {
+   width: 100%;
+   height: auto;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: flex-start;
+   overflow: hidden;
+}
+
+.mainDiv .section1 .mainPart .logoSec {
+   width: 60px;
+   height: auto;
+}
+
+.mainDiv .section1 .mainPart .logoSec>img {
+   width: 100%;
+   height: fit-content;
+}
+
+.mainDiv .section1 .mainPart .introText {
+   width: 100%;
+   height: auto;
+}
+
+.mainDiv .section1 .mainPart .introText>p {
+   font-size: xx-large;
+   font-family: lily;
+   color: white;
+}
+
+.mainDiv .section1 .mainPart .imgSec {
+   width: 70%;
+   height: auto;
+   animation: float 2s linear infinite;
+   animation-direction: alternate;
+}
+
+.mainDiv .section1 .mainPart .imgSec>img {
+   width: 100%;
+   height: fit-content;
+}
+
+@keyframes float {
+   from {
+      transform: translateY(0px);
+   }
+
+   to {
+      transform: translateY(10px);
+   }
+}
+
+
+/* section1 End ================================ */
+
+
+/* section2 Start ================================ */
+.mainDiv .section2 {
+   position: relative;
+   width: 50%;
+   height: 100vh;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+
+.mainDiv .section2 .logoSec {
+   display: none;
+   width: 50%;
+   height: auto;
+   justify-content: flex-start;
+}
+
+.mainDiv .section2 .logoSec>section {
+   width: 80px;
+   height: auto;
+}
+
+.mainDiv .section2 .logoSec>section>img {
+   width: 100%;
+   height: fit-content;
+}
+
+.mainDiv .section2 .myForm {
+   width: 70%;
+   height: auto;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: flex-start;
+}
+
+.mainDiv .section2 .myForm>section {
+   width: 100%;
+   height: auto;
+   margin: 5px 0px;
+   display: flex;
+   flex-direction: column;
+}
+
+.mainDiv .section2 .myForm .formHeading>h1 {
+   font-size: xx-large;
+   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+   font-weight: lighter;
+}
+
+.mainDiv .section2 .myForm .formHeading>span {
+   margin: 5px 0px;
+   color: var(--firstGrey);
+}
+
+.mainDiv .section2 .myForm .formItem>label {
+   font-weight: bold;
+   margin-bottom: 5px;
+}
+
+.mainDiv .section2 .myForm .formItem>input {
+   width: 100%;
+   height: 40px;
+   background-color: var(--seconGrey);
+   /* border: 1px solid var(--firstGrey); */
+   border: none;
+   border-radius: 5px;
+   padding-left: 20px;
+}
+
+.mainDiv .section2 .myForm .formItem>input:focus {
+   outline: none;
+   background-color: white;
+}
+
+.mainDiv .section2 .myForm .formItem .error {
+   font-size: small;
+   color: red;
+   margin-top: 5px;
+}
+
+.mainDiv .section2 .myForm .duoFormItem>section {
+   width: 100%;
+   height: auto;
+   display: flex;
+   justify-content: space-between;
+}
+
+.mainDiv .section2 .myForm .duoFormItem>section>section {
+   display: flex;
+   flex-direction: column;
+   width: 48%;
+   height: auto;
+}
+
+.mainDiv .section2 .myForm .duoFormItem>section>section>label {
+   font-weight: bold;
+   margin-bottom: 5px;
+}
+
+.mainDiv .section2 .myForm .duoFormItem>section>section>input {
+   width: 100%;
+   height: 40px;
+   background-color: var(--seconGrey);
+   border: none;
+   border-radius: 5px;
+   padding-left: 20px
+}
+
+.mainDiv .section2 .myForm .duoFormItem>section>section>input:focus {
+   outline: none;
+   background-color: white;
+}
+
+.mainDiv .section2 .myForm .duoFormItem .error {
+   font-size: small;
+   color: red;
+   margin-top: 5px;
+}
+
+.mainDiv .section2 .myForm .duoFormItem>span {
+   display: flex;
+   justify-content: space-between;
+   margin-top: 10px;
+}
+
+.mainDiv .section2 .myForm .duoFormItem>span>span {
+   font-size: small;
+   color: var(--firstGrey);
+   width: 95%;
+}
+
+.mainDiv .section2 .myForm .submitButton>input {
+   width: 100%;
+   height: 45px;
+   background-color: var(--mainBlue);
+   border: 1px solid var(--mainBlue);
+   border-radius: 10px;
+   font-family: lily, 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+   color: white;
+   font-size: medium;
+   cursor: pointer;
+}
+
+.mainDiv .section2 .myForm .orSection {
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-between;
+   font-weight: bold;
+}
+
+.mainDiv .section2 .myForm .orSection>hr {
+   width: 45%;
+   height: 0;
+   border: 1px solid var(--darkBrown);
+}
+
+.mainDiv .section2 .myForm .otherOption {
+   align-items: center
+}
+
+.mainDiv .section2 .myForm .otherOption>span {
+   width: 90%;
+   border: 1px solid black;
+   border-radius: 20px;
+   padding: 10px;
+   display: flex;
+   justify-content: center;
+   font-weight: bold;
+}
+
+.mainDiv .section2 .myForm .otherOption .google {
+   margin-bottom: 10px;
+}
+
+.mainDiv .section2 .myForm .otherOption>span>i {
+   margin-right: 10px;
+   color: green;
+}
+
+/* Footer Image =============================== */
+.mainDiv .section2 .footerImg {
+   position: absolute;
+   width: 100px;
+   height: auto;
+   bottom: 0;
+   right: 0;
+   margin-right: 10%;
+   margin-bottom: 10px;
+}
+
+.mainDiv .section2 .footerImg>img {
+   width: 100%;
+   height: fit-content;
+}
+
+/* section2 End ================================ */
+
+
+/* Media Queries =================================================== */
+@media only screen and (max-width: 1000px) {
+   .mainDiv {
+      justify-content: center;
+   }
+
+   .mainDiv .section1 {
+      display: none;
+   }
+
+   .mainDiv .section2 {
+      width: 100%;
+      height: auto;
+      margin: 50px 0px;
+   }
+
+   .mainDiv .section2 .logoSec {
+      display: flex;
+   }
+
+   .mainDiv .section2 .myForm {
+      margin: 50px 0px;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+   }
+
+   .mainDiv .section2 .myForm .formHeading>span,
+   .mainDiv .section2 .myForm .duoFormItem>span>span {
+      color: black;
+   }
+}
+
+
+@media only screen and (max-width: 700px) {
+
+   .mainDiv .section2 .myForm,
+   .mainDiv .section2 .logoSec {
+      width: 80%;
+   }
+}
+
+
+@media only screen and (max-width: 500px) {
+
+   .mainDiv .section2 .myForm,
+   .mainDiv .section2 .logoSec {
+      width: 90%;
+   }
+
+   .mainDiv .section2 .myForm .duoFormItem>section {
+      flex-direction: column;
+   }
+
+   .mainDiv .section2 .myForm .duoFormItem>section>section {
+      width: 100%;
+   }
+
+   .mainDiv .section2 .myForm .duoFormItem>section .pass {
+      margin-bottom: 20px;
+   }
+}
+
+
+@media only screen and (max-width: 350px) {
+   .mainDiv .section2 .myForm .duoFormItem>span>span {
+      width: 90%;
+   }
+
+   .mainDiv .section2 .myForm .otherOption>span {
+      font-size: small;
+   }
+
+}

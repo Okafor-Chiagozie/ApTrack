@@ -1,8 +1,8 @@
 <?php
 
 session_start();
-require("dbConnect.php");
-include("functions.php");
+require("../../scripts/config.php");
+include("../../scripts/functions.php");
 
 $_SESSION["userMenu"] = "profile";
 
@@ -13,7 +13,7 @@ identity();
 
 <?php
 
-include("user_header.php");
+include("header.php");
 
 ?>
 
@@ -29,7 +29,7 @@ include("user_header.php");
 
                 <section class="container">
                     <section class="imgSec inside">
-                        <img src="user_pictures/<?= $userDetails["Picture"] ?>" alt="Profile Image" class="outside">
+                        <img src="../../uploads/user-pictures/<?= $userDetails["Picture"] ?>" alt="Profile Image" class="outside">
                     </section>
 
                     <span>
@@ -62,7 +62,7 @@ include("user_header.php");
                         <span class="two"> <?= date("D, jS M, Y.", $userDetails["Regdate"]) ?> </span>
                     </span>
 
-                    <a class="edit" href="user_profile_edit.php"><i class="fas fa-edit"></i> Edit</a>
+                    <a class="edit" href="profile-edit.php"><i class="fas fa-edit"></i> Edit</a>
                     
                 </section>
 
@@ -76,8 +76,8 @@ include("user_header.php");
         </section>
 
         
-        <script src="general.js"></script>
-        <script src="fmworks/jquery.js"></script>
+        <script src="../../assets/js/dashboard.js"></script>
+        <script src="../../assets/libraries/jquery.js"></script>
     </div>
 
 

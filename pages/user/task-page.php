@@ -1,8 +1,8 @@
 <?php
 
 session_start();
-require("dbConnect.php");
-include("functions.php");
+require("../../scripts/config.php");
+include("../../scripts/functions.php");
 
 $_SESSION["userMenu"] = "task";
 
@@ -13,7 +13,7 @@ identity();
 
 <?php
 
-include("user_header.php");
+include("header.php");
 
 ?>
 
@@ -62,8 +62,8 @@ include("user_header.php");
         </section>
 
         
-        <script src="general.js"></script>
-        <script src="fmworks/jquery.js"></script>
+        <script src="../../assets/js/dashboard.js"></script>
+        <script src="../../assets/libraries/jquery.js"></script>
     </div>
 
 

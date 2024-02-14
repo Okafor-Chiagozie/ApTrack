@@ -53,7 +53,7 @@ session_start();
                   </span>
                </section>
 
-               <form action="scripts/validateUser.php" method="post" id="user" class="myForm">
+               <form action="scripts/validate-user.php" method="post" id="user" class="myForm">
                   <section class="formItem">
                      <label for="userEmail">Email</label>
                      <input type="email" name="userEmail" required placeholder="Your Email" 

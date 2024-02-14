@@ -2,8 +2,8 @@
 <?php
 
 session_start();
-require("dbConnect.php");
-include("functions.php");
+require("../../scripts/config.php");
+include("../../scripts/functions.php");
 
 $_SESSION["userMenu"] = "dashboard";
 
@@ -14,7 +14,7 @@ identity();
 
 <?php
 
-include("user_header.php");
+include("header.php");
 
 ?>
 
@@ -45,7 +45,7 @@ include("user_header.php");
 
                     <section class="teamBox outside" title="Team Leader">
                         <section class="imgSec inside">
-                            <img src="user_pictures/<?= $teamLeader["Picture"] ?>" alt="Profile picture" class="outside">
+                            <img src="../../uploads/user-pictures/<?= $teamLeader["Picture"] ?>" alt="Profile picture" class="outside">
                         </section>
 
                         <span class="infoSec">
@@ -74,7 +74,7 @@ include("user_header.php");
                     
                     <section class="teamBox outside">
                         <section class="imgSec inside">
-                            <img src="user_pictures/<?= $teamDetails["Picture"] ?>" alt="Profile picture" class="outside">
+                            <img src="../../uploads/user-pictures/<?= $teamDetails["Picture"] ?>" alt="Profile picture" class="outside">
                         </section>
 
                         <span class="infoSec">
@@ -170,8 +170,8 @@ include("user_header.php");
         </section>
 
         
-        <script src="general.js"></script>
-        <script src="fmworks/jquery.js"></script>
+        <script src="../../assets/js/dashboard.js"></script>
+        <script src="../../assets/libraries/jquery.js"></script>
     </div>
 
 

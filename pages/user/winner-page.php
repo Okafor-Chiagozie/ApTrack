@@ -1,8 +1,8 @@
 <?php
 
 session_start();
-require("dbConnect.php");
-include("functions.php");
+require("../../scripts/config.php");
+include("../../scripts/functions.php");
 
 $_SESSION["userMenu"] = "winner";
 
@@ -13,7 +13,7 @@ identity();
 
 <?php
 
-include("user_header.php");
+include("header.php");
 
 ?>
 
@@ -51,23 +51,14 @@ include("user_header.php");
                 <?php }}else{ ?>
                     <p class="info"> <span>No Winner(s) available</span> </p>
                 <?php } ?>
-
-
             </section>
 
-
-
             <p class="footer">All Rights Reserved @Beta Group 2022</p>
-
         </section>
 
-        
-        <script src="general.js"></script>
-        <script src="fmworks/jquery.js"></script>
-
-        
+        <script src="../../assets/js/dashboard.js"></script>
+        <script src="../../assets/libraries/jquery.js"></script>
     </div>
-
 
 </body>
 </html>

@@ -1,8 +1,8 @@
 <?php
 
 session_start();
-require("dbConnect.php");
-include("functions.php");
+require("../../scripts/config.php");
+include("../../scripts/functions.php");
 
 $_SESSION["userMenu"] = "notifications";
 
@@ -13,10 +13,9 @@ identity();
 
 <?php
 
-include("user_header.php");
+include("header.php");
 
 ?>
-p
 
 <section class="mainSection inside" id="mainSection">
 
@@ -82,8 +81,8 @@ p
 </div>
 
 
-<script src="general.js"></script>
-<script src="fmworks/jquery.js"></script>
+<script src="../../assets/js/dashboard.js"></script>
+<script src="../../assets/libraries/jquery.js"></script>
 <script>
    async function accept(num, email, id, teamName) {
       var container = document.getElementsByClassName("container")
@@ -105,7 +104,6 @@ p
       })
    }
 </script>
-
 
 </body>
 

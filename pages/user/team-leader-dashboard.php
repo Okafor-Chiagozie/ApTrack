@@ -2,8 +2,8 @@
 <?php
 
 session_start();
-require("dbConnect.php");
-include("functions.php");
+require("../../scripts/config.php");
+include("../../scripts/functions.php");
 
 $_SESSION["userMenu"] = "leader_dash";
 
@@ -14,14 +14,13 @@ identity();
 
 <?php
 
-include("user_header.php");
+include("header.php");
 
 if($_SESSION["status"] !== "leader"){
-    header("Location: user_dashboard.php");
+    header("Location: dashboard.php");
 }
 
 ?>
-
 
 
         <section class="mainSection inside" id="mainSection">
@@ -39,25 +38,23 @@ if($_SESSION["status"] !== "leader"){
                 </nav>
 
                 <?php
+                  $sqlAll = "SELECT * FROM user_login ORDER BY Firstname";
+                  $sqlInsertAll = mysqli_query($db_connection,$sqlAll);
 
-                $sqlAll = "SELECT * FROM user_login ORDER BY Firstname";
-                $sqlInsertAll = mysqli_query($db_connection,$sqlAll);
-
-                $sqlTeamLeader = "SELECT * FROM user_login WHERE Tl = '1' ";
-                $sqlInsertTeamLeader = mysqli_query($db_connection,$sqlTeamLeader);
-
+                  $sqlTeamLeader = "SELECT * FROM user_login WHERE Tl = '1' ";
+                  $sqlInsertTeamLeader = mysqli_query($db_connection,$sqlTeamLeader);
                 ?>
 
                 <!-- All users section -->
                 <section class="container" id="con1">
                     <?php 
-                    $num = 0;
+                     $num = 0;
 
-                    while($allUsers = mysqli_fetch_assoc($sqlInsertAll)){ 
+                     while($allUsers = mysqli_fetch_assoc($sqlInsertAll)){ 
                     ?>
                     <section class="teamBox outside" <?php if($allUsers["Tl"] == "1"){ ?> title="<?= strtoupper($allUsers["Team_name"]) ?> Team Leader" <?php } ?> >
                         <section class="imgSec inside">
-                            <img src="user_pictures/<?= $allUsers["Picture"] ?>" alt="Profile picture" class="outside">
+                            <img src="../../uploads/user-pictures/<?= $allUsers["Picture"] ?>" alt="Profile picture" class="outside">
                         </section>
 
                         <span class="infoSec">
@@ -120,7 +117,7 @@ if($_SESSION["status"] !== "leader"){
                     <?php while($teamLeaders = mysqli_fetch_assoc($sqlInsertTeamLeader)){ ?>
                     <section class="teamBox outside">
                         <section class="imgSec inside">
-                            <img src="user_pictures/<?= $teamLeaders["Picture"] ?>" alt="Profile picture" class="outside">
+                            <img src="../../uploads/user-pictures/<?= $teamLeaders["Picture"] ?>" alt="Profile picture" class="outside">
                         </section>
 
                         <span class="infoSec">
@@ -184,8 +181,8 @@ if($_SESSION["status"] !== "leader"){
         </section>
 
         
-        <script src="general.js"></script>
-        <script src="fmworks/jquery.js"></script>
+        <script src="../../assets/js/dashboard.js"></script>
+        <script src="../../assets/libraries/jquery.js"></script>
     </div>
                 
     <script>

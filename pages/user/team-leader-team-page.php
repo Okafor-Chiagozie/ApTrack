@@ -2,8 +2,8 @@
 <?php
 
 session_start();
-require("dbConnect.php");
-include("functions.php");
+require("../../scripts/config.php");
+include("../../scripts/functions.php");
 
 $_SESSION["userMenu"] = "leader";
 
@@ -33,7 +33,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $documentName .= time();
                 $documentName .= "." . $ext;
 
-                $fileDestination = "./teamDocument/";
+                $fileDestination = "../../../uploads/team-document/";
                 $tmpFile = $teamDocumentFile['tmp_name'];
 
                 
@@ -84,10 +84,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 <?php
 
-include("user_header.php");
+include("header.php");
 
 if($_SESSION["status"] !== "leader"){
-    header("Location: user_dashboard.php");
+    header("Location: dashboard.php");
 }
 
 ?>
@@ -120,7 +120,7 @@ if($_SESSION["status"] !== "leader"){
                     <?php }else{ ?>
                     <section class="teamBox outside">
                         <section class="imgSec inside">
-                            <img src="user_pictures/<?= $alphaLeader["Picture"] ?>" alt="Profile picture" class="outside">
+                            <img src="../../uploads/user-pictures/<?= $alphaLeader["Picture"] ?>" alt="Profile picture" class="outside">
                         </section>
 
                         <span class="infoSec">
@@ -153,7 +153,7 @@ if($_SESSION["status"] !== "leader"){
                     
                     <section class="teamBox outside">
                         <section class="imgSec inside">
-                            <img src="user_pictures/<?= $alphaMembers["Picture"] ?>" alt="Profile picture" class="outside">
+                            <img src="../../uploads/user-pictures/<?= $alphaMembers["Picture"] ?>" alt="Profile picture" class="outside">
                         </section>
 
                         <span class="infoSec">
@@ -218,9 +218,9 @@ if($_SESSION["status"] !== "leader"){
         
 
         
-        <script src="general.js"></script>
-        <script src="fmworks/jquery.js"></script>
-        <script src="fmworks/toastr.min.js"></script>
+        <script src="../../assets/js/dashboard.js"></script>
+        <script src="../../assets/libraries/jquery.js"></script>
+        <script src="../../assets/libraries/toastr.min.js"></script>
 
         <?php
             if(isset($_SESSION["fileSupport"]) && ($_SESSION["fileSupport"] == "Yes")){

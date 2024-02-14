@@ -97,24 +97,24 @@ function userLogin($email, $password, $table){
                 $_SESSION["status"] = "user";
                 
                 // Going to the dashboard
-                header("Location: user_dashboard.php");
+                header("Location: ../pages/user/dashboard.php");
             }else{
                 // For knowing if the user went through the sign in
                 $_SESSION["userEmail"] = $email;
                 $_SESSION["status"] = "leader";
                 
                 // Going to the dashboard
-                header("Location: teamLeader_dashboard.php");
+                header("Location: ../pages/user/team-leader-dashboard.php");
             }
 
 
         }else{ 
             $_SESSION["userWrongInfo"] = "Yes";
-            header("Location: sign_in.php");
+            header("Location: ../sign-in.php");
         }
     }else{
         $_SESSION["userWrongInfo"] = "Yes";
-        header("Location: sign_in.php");
+        header("Location: ../sign-in.php");
     }
 }
 

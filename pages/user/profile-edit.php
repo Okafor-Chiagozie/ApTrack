@@ -1,8 +1,8 @@
 <?php
 
 session_start();
-require("dbConnect.php");
-include("functions.php");
+require("../../scripts/config.php");
+include("../../scripts/functions.php");
 
 $_SESSION["userMenu"] = "profile_edit";
 
@@ -93,7 +93,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 <?php
 
-include("user_header.php");
+include("header.php");
 
 ?>
 
@@ -149,9 +149,9 @@ include("user_header.php");
         </section>
 
         
-        <script src="general.js"></script>
-        <script src="fmworks/jquery.js"></script>
-        <script src="fmworks/toastr.min.js"></script>
+        <script src="../../assets/js/dashboard.js"></script>
+        <script src="../../assets/libraries/jquery.js"></script>
+        <script src="../../assets/libraries/toastr.min.js"></script>
 
         <?php
             if(isset($_SESSION["fileSupport"]) && ($_SESSION["fileSupport"] == "Yes")){

@@ -53,7 +53,7 @@ include("header.php");
                 <?php } ?>
             </section>
 
-            <p class="footer">All Rights Reserved @Beta Group 2022</p>
+            <p class="footer">All Rights Reserved @ApTrack <?= date("Y") ?></p>
         </section>
 
         <script src="../../assets/js/dashboard.js"></script>

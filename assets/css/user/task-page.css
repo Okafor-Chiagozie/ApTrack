@@ -37,6 +37,8 @@
 .mainDiv .mainSection .firstSec .container>p{
     width: 100%;
     height: auto;
+    color: rgba(0, 0, 0, 0.8);
+    line-height: 1.5;
 }
 
 .mainDiv .mainSection .firstSec .container>section{

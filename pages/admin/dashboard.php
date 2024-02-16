@@ -2,8 +2,8 @@
 <?php
 
 session_start();
-require("dbConnect.php");
-include("functions.php");
+require("../../scripts/config.php");
+include("../../scripts/functions.php");
 
 $_SESSION["adminMenu"] = "dashboard";
 
@@ -14,7 +14,7 @@ $_SESSION["adminMenu"] = "dashboard";
 
 <?php
 
-include("admin_header.php");
+include("header.php");
 
 ?>
 
@@ -47,7 +47,7 @@ include("admin_header.php");
                     <?php while($allUsers = mysqli_fetch_assoc($sqlInsertAll)){ ?>
                     <section class="teamBox outside" <?php if($allUsers["Tl"] == "1"){ ?> title="<?= strtoupper($allUsers["Team_name"]) ?> Team Leader" <?php } ?> >
                         <section class="imgSec inside">
-                            <img src="user_pictures/<?= $allUsers["Picture"] ?>" alt="Profile picture" class="outside">
+                            <img src="../../uploads/user-pictures/<?= $allUsers["Picture"] ?>" alt="Profile picture" class="outside">
                         </section>
 
                         <span class="infoSec">
@@ -62,20 +62,16 @@ include("admin_header.php");
                         <?php if($allUsers["Tl"] == "1"){ ?>
                         <p><i class="fa-solid fa-star"></i></p>
                         <?php } ?>
-
                     </section>
                     <?php } ?>
                     
                 </section>
 
-                
-
                 <section class="container" id="con2">
-
                     <?php while($teamLeaders = mysqli_fetch_assoc($sqlInsertTeamLeader)){ ?>
                     <section class="teamBox outside">
                         <section class="imgSec inside">
-                            <img src="user_pictures/<?= $teamLeaders["Picture"] ?>" alt="Profile picture" class="outside">
+                            <img src="../../uploads/user-pictures/<?= $teamLeaders["Picture"] ?>" alt="Profile picture" class="outside">
                         </section>
 
                         <span class="infoSec">
@@ -88,21 +84,13 @@ include("admin_header.php");
                         </span>
 
                         <p><i class="fa-solid fa-star"></i></p>
-
                     </section>
                     <?php } ?>
-                    
+
                 </section>
-
-
-
-
             </section>
 
-
-
-            <p class="footer">All Rights Reserved @Beta Group 2022</p>
-
+            <p class="footer">All Rights Reserved @ApTrack <?= date("Y") ?></p>
         </section>
 
         <div class="alertBox" id="alertBox" >
@@ -127,21 +115,20 @@ include("admin_header.php");
                             <option value="Zeta">Zeta</option>
                             <option value="Omega">Omega</option>
                             <option value="Delta">Delta</option>
+                            <option hidden selected>Select team</option>
                         </select>
                     </span>
                     
                     <span class="button" onclick="makeLeader()">OK</span>
                 </section>
                 
-
-                
             </section>
             
         </div>
 
         
-        <script src="general.js"></script>
-        <script src="fmworks/jquery.js"></script>
+        <script src="../../assets/js/dashboard.js"></script>
+        <script src="../../assets/libraries/jquery.js"></script>
     </div>
 
 
@@ -188,8 +175,7 @@ include("admin_header.php");
             var main_email = leader_email.textContent
             var main_teamName = leader_team.value
 
-            var result = await fetch(`asynchro.php?action=makeLeader&email=${main_email}&teamName=${main_teamName}`);
-            
+            var result = await fetch(`../../scripts/async.php?action=makeLeader&email=${main_email}&teamName=${main_teamName}`);
 
             window.location.href = 'admin_dashboard.php';
         }

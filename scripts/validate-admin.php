@@ -1,6 +1,6 @@
 <?php
 
-require("dbConnect.php");
+require("config.php");
 include("functions.php");
 
 session_start();

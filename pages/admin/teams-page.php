@@ -2,8 +2,8 @@
 <?php
 
 session_start();
-require("dbConnect.php");
-include("functions.php");
+require("../../scripts/config.php");
+include("../../scripts/functions.php");
 
 $_SESSION["adminMenu"] = "teams";
 
@@ -14,7 +14,7 @@ $_SESSION["adminMenu"] = "teams";
 
 <?php
 
-include("admin_header.php");
+include("header.php");
 
 ?>
 
@@ -319,14 +319,12 @@ include("admin_header.php");
                     </section>
                     <?php }} ?>
 
-
                     <?php if($gamaDownload["Disqualify"] == "1"){ ?>
                     <div class="removed"> 
                         <p>Disqualified</p> 
                         <span onclick="pardon('Gama')">Pardon</span>
                     </div>
-                    <?php } ?>
-                                        
+                    <?php } ?>              
                 </section>
 
 
@@ -356,7 +354,6 @@ include("admin_header.php");
                         </span>
 
                         <p><i class="fa-solid fa-star"></i></p>
-
                     </section> 
 
                     <section class="teamBox outside">
@@ -369,7 +366,6 @@ include("admin_header.php");
                         <?php }else{ ?>
                         <a class="download" href="teamDocument/<?= $sigmaDownload['Document'] ?>"  download="sigma">Download task</a>
                         <?php } ?>
-
                     </section>
 
                     <?php } ?>
@@ -389,7 +385,6 @@ include("admin_header.php");
                             <h1><?= ucfirst($sigmaMembers["Firstname"])." ".ucfirst($sigmaMembers["Lastname"]) ?></h1>
                             <span><?= $sigmaMembers["Specialty"] ?></span>
                         </span>
-
                     </section>
                     <?php }} ?>
 
@@ -398,8 +393,7 @@ include("admin_header.php");
                         <p>Disqualified</p> 
                         <span onclick="pardon('Sigma')">Pardon</span>
                     </div>
-                    <?php } ?>
-                                        
+                    <?php } ?>          
                 </section>
 
 
@@ -471,8 +465,7 @@ include("admin_header.php");
                         <p>Disqualified</p> 
                         <span onclick="pardon('Zeta')">Pardon</span>
                     </div>
-                    <?php } ?>
-                                        
+                    <?php } ?>            
                 </section>
 
 
@@ -515,7 +508,6 @@ include("admin_header.php");
                         <?php }else{ ?>
                         <a class="download" href="teamDocument/<?= $omegaDownload['Document'] ?>"  download="omega">Download task</a>
                         <?php } ?>
-
                     </section>
 
                     <?php } ?>
@@ -544,8 +536,7 @@ include("admin_header.php");
                         <p>Disqualified</p> 
                         <span onclick="pardon('Omega')">Pardon</span>
                     </div>
-                    <?php } ?>
-                                        
+                    <?php } ?>                   
                 </section>
 
 
@@ -575,7 +566,6 @@ include("admin_header.php");
                         </span>
 
                         <p><i class="fa-solid fa-star"></i></p>
-
                     </section> 
 
                     <section class="teamBox outside">
@@ -588,7 +578,6 @@ include("admin_header.php");
                         <?php }else{ ?>
                         <a class="download" href="teamDocument/<?= $deltaDownload['Document'] ?>"  download="delta">Download task</a>
                         <?php } ?>
-
                     </section>
 
                     <?php } ?>
@@ -608,7 +597,6 @@ include("admin_header.php");
                             <h1><?= ucfirst($deltaMembers["Firstname"])." ".ucfirst($deltaMembers["Lastname"]) ?></h1>
                             <span><?= $deltaMembers["Specialty"] ?></span>
                         </span>
-
                     </section>
                     <?php }} ?>
 
@@ -617,24 +605,15 @@ include("admin_header.php");
                         <p>Disqualified</p> 
                         <span onclick="pardon('Delta')">Pardon</span>
                     </div>
-                    <?php } ?>
-                                        
+                    <?php } ?>             
                 </section>
-
-
-
-                
             </section>
 
-
-
-            <p class="footer">All Rights Reserved @Beta Group 2022</p>
-
+            <p class="footer">All Rights Reserved @ApTrack <?= date("Y") ?></p>
         </section>
-
         
-        <script src="general.js"></script>
-        <script src="fmworks/jquery.js"></script>
+        <script src="../../assets/js/dashboard.js"></script>
+        <script src="../../assets/libraries/jquery.js"></script>
     </div>
 
 
@@ -723,23 +702,17 @@ include("admin_header.php");
         }
 
         async function disqualify(name){
-            var result = await fetch(`asynchro.php?action=disqualifyTeam&teamName=${name}`);
+            var result = await fetch(`../../scripts/async.php?action=disqualifyTeam&teamName=${name}`);
             
-
             window.location.href = 'admin_teams.php';
-            
         }
 
 
         async function pardon(name){
-            var result = await fetch(`asynchro.php?action=pardonTeam&teamName=${name}`);
+            var result = await fetch(`../../scripts/async.php?action=pardonTeam&teamName=${name}`);
             
-
-            window.location.href = 'admin_teams.php';
-            
+            window.location.href = 'teams-page.php';
         }
-
-
     </script>
 
 </body>

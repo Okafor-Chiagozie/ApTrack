@@ -1,21 +1,17 @@
 
 <?php
 
-require("dbConnect.php");
-include("functions.php");
+require("../../scripts/config.php");
+include("../../scripts/functions.php");
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-
     // Declaring variables
     $The_year = $Start_month = $End_month =  $Team_name = $Team_leader = $Names = "";
 
     if(isset($_POST["chooseWinner"])){
-        
         if(!empty($_POST["teamName"])){
-
             $Team_name = $_POST["teamName"];
-
 
             // Date
             $sqlDate = "SELECT * FROM task ORDER BY Id DESC LIMIT 1";
@@ -40,10 +36,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             while($members = mysqli_fetch_assoc($sqlInsertMembers)){
                $Names .= $members["Firstname"]." ".$leader["Lastname"]."&";
             }
-            
         }
-
-
     }
 
 
@@ -57,20 +50,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $sqlUpdate = "UPDATE user_login set Winner = '1' ";
         $sqlInsertUpdate = mysqli_query($db_connection, $sqlUpdate);
 
-        header("Location: admin_winners.php");
+        header("Location: winners-page.php");
 
         mysqli_close($db_connection);
     }
-
-
-
 }
-
-
-
-
-
-
-
 
 ?>

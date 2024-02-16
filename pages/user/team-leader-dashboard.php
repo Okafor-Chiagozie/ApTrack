@@ -24,7 +24,6 @@ if($_SESSION["status"] !== "leader"){
 
 
         <section class="mainSection inside" id="mainSection">
-            
             <section class="firstSec">
                 <section class="Heading">
                     <h1>All Users</h1>
@@ -84,15 +83,12 @@ if($_SESSION["status"] !== "leader"){
                                 </span>
                         <?php $num++; } }?>
 
-
                         <?php if($allUsers["Tl"] == "1"){ ?>
                         <p><i class="fa-solid fa-star"></i></p>
                         <?php } ?>
 
                     </section>
                     <?php } ?>
-
-                    
 
                     <?php
                     $sqlDisqualify = "SELECT * FROM teams WHERE Team_name = '{$userDetails['Team_name']}' ";
@@ -105,15 +101,12 @@ if($_SESSION["status"] !== "leader"){
                     <div class="removed"> 
                         <p>Disqualified</p> 
                     </div>
-
                     <?php } ?>
                     
                 </section>
 
-                
                 <!-- Team Leader section -->
                 <section class="container" id="con2">
-
                     <?php while($teamLeaders = mysqli_fetch_assoc($sqlInsertTeamLeader)){ ?>
                     <section class="teamBox outside">
                         <section class="imgSec inside">
@@ -130,18 +123,11 @@ if($_SESSION["status"] !== "leader"){
                         </span>
 
                         <p><i class="fa-solid fa-star"></i></p>
-
                     </section>
                     <?php } ?>
-                    
+
                 </section>
-
-
-                         
             </section>
-
-
-
 
             <section class="secondSec">
                 <section class="Heading">
@@ -175,11 +161,8 @@ if($_SESSION["status"] !== "leader"){
                 
             </section>
 
-
-            <p class="footer">All Rights Reserved @Beta Group 2022</p>
-
+            <p class="footer">All Rights Reserved @ApTrack <?= date("Y") ?></p>
         </section>
-
         
         <script src="../../assets/js/dashboard.js"></script>
         <script src="../../assets/libraries/jquery.js"></script>
@@ -207,15 +190,14 @@ if($_SESSION["status"] !== "leader"){
 
         async function teamMemberRequest(num, leaderTeam, leaderName, userEmail){
 
+            var result = await fetch(`../../scripts/async.php?action=teamMemberRequest&leaderTeam=${leaderTeam}&leaderName=${leaderName}&userEmail=${userEmail}`);
+
             var requestButton = document.getElementsByClassName("requestButton")
             requestButton[num].firstElementChild.onclick = ""
             requestButton[num].firstElementChild.textContent = "Request Sent ✓"
             requestButton[num].firstElementChild.style.backgroundColor = "silver"
             requestButton[num].firstElementChild.style.border = "1px solid silver"
             requestButton[num].firstElementChild.style.color = "grey"
-
-            var result = await fetch(`asynchro.php?action=teamMemberRequest&leaderTeam=${leaderTeam}&leaderName=${leaderName}&userEmail=${userEmail}`);
-           
 
         }
     </script>

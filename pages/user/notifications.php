@@ -75,7 +75,7 @@ include("header.php");
 
 
 
-   <p class="footer">All Rights Reserved @Beta Group 2022</p>
+   <p class="footer">All Rights Reserved @ApTrack <?= date("Y") ?></p>
 
 </section>
 </div>
@@ -88,20 +88,17 @@ include("header.php");
       var container = document.getElementsByClassName("container")
       container[num].style.display = "none"
 
-      var result = await fetch(`asynchro.php?action=accept&email=${email}&id=${id}&teamName=${teamName}`);
+      var result = await fetch(`../../scripts/async.php?action=accept&email=${email}&id=${id}&teamName=${teamName}`);
       var req = await result.text();
+
+      window.location.href = req.toString();
    }
 
-   function decline(num, email, id) {
+   async function decline(num, email, id) {
       var container = document.getElementsByClassName("container")
       container[num].style.display = "none"
 
-      $.post(`./user_notification_handler.php?action=decline&email=${email}&id=${id}`, (res) => {
-         if (res == "successful") {
-
-            console.log("Working")
-         }
-      })
+      var result = await fetch(`../../scripts/async.php?action=decline&email=${email}&id=${id}`);
    }
 </script>
 

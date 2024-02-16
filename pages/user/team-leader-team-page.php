@@ -35,12 +35,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                 $fileDestination = "../../../uploads/team-document/";
                 $tmpFile = $teamDocumentFile['tmp_name'];
-
                 
                 $sqlDocument = "SELECT Document FROM teams WHERE Team_name = '{$userDetails['Team_name']}' ";
                 $sqlInsertDocument = mysqli_query($db_connection, $sqlDocument);
                 $documentCheck = mysqli_fetch_assoc($sqlInsertDocument);
-
 
                 // The function to upload the file to the destination
                 if($documentCheck["Document"] != " "){
@@ -52,13 +50,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     }else{
                         move_uploaded_file($tmpFile, $fileDestination.$documentName);
                     }
-
-                    
                 }
-                
             }
         }
-
     }
 
 
@@ -72,11 +66,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if($sqlInsert){
             $_SESSION["documentUpload"] = "Yes";
         }
-
     }
-
-
-
 }
 
 ?>
@@ -95,7 +85,6 @@ if($_SESSION["status"] !== "leader"){
 
 
         <section class="mainSection inside" id="mainSection">
-            
             <section class="firstSec">
                 <section class="Heading">
                     <h1>Team Members</h1>
@@ -103,14 +92,12 @@ if($_SESSION["status"] !== "leader"){
                 </section>
 
                 <?php
-
                 $sqlAlphaLeader = "SELECT * FROM user_login WHERE Tl = '1' AND Team_name = '{$userDetails['Team_name']}' ";
                 $sqlInsertAlphaLeader = mysqli_query($db_connection,$sqlAlphaLeader);
                 $alphaLeader = mysqli_fetch_assoc($sqlInsertAlphaLeader);
 
                 $sqlAlphaMembers = "SELECT * FROM user_login WHERE Tl = '0' AND Team_name = '{$userDetails['Team_name']}' ";
                 $sqlInsertAlphaMembers = mysqli_query($db_connection,$sqlAlphaMembers);
-
                 ?>
 
                 <!-- Team Members section -->
@@ -133,9 +120,7 @@ if($_SESSION["status"] !== "leader"){
                         </span>
 
                         <p><i class="fa-solid fa-star"></i></p>
-
                     </section> 
-                   
 
                     <!-- Team Info -->
                     <section class="teamBox outside">
@@ -143,7 +128,6 @@ if($_SESSION["status"] !== "leader"){
                     </section>
 
                     <?php } ?>
-
 
                     <hr>
 
@@ -160,19 +144,13 @@ if($_SESSION["status"] !== "leader"){
                             <h1><?= ucfirst($alphaMembers["Firstname"])." ".ucfirst($alphaMembers["Lastname"]) ?></h1>
                             <span><?= $alphaMembers["Specialty"] ?></span>
                         </span>
-
                     </section>
                     <?php }} ?>
                                                             
-                </section>
-
-                                         
+                </section>              
             </section>
 
-
-
             <!-- Second Partttttttttttt -->
-
             <section class="secondSec">
                 <section class="Heading">
                     <h1>Project Submission</h1>
@@ -182,23 +160,17 @@ if($_SESSION["status"] !== "leader"){
                 <section class="container">
                     
                     <form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data" class="myForm">
-
                         <section class="projectUpload">
                             <label for="teamDocument">Project Upload</label>
                             <input type="file" id="file" name="teamDocument" size="10" class="inside">
                         </section>
 
                         <input type="submit" name="upload" value="&#8593; Upload">
-
                     </form>
-
-
-                </section>
-                
+                </section>  
             </section>
 
-
-            <p class="footer">All Rights Reserved @Beta Group 2022</p>
+            <p class="footer">All Rights Reserved @ApTrack <?= date("Y") ?></p>
 
             <?php
             $sqlDisqualify = "SELECT * FROM teams WHERE Team_name = '{$userDetails['Team_name']}' ";
@@ -215,8 +187,6 @@ if($_SESSION["status"] !== "leader"){
             <?php } ?>
 
         </section>
-        
-
         
         <script src="../../assets/js/dashboard.js"></script>
         <script src="../../assets/libraries/jquery.js"></script>
@@ -265,8 +235,6 @@ if($_SESSION["status"] !== "leader"){
             requestButton[num].firstElementChild.style.color = "grey"
 
             var result = await fetch(`asynchro.php?action=teamMemberRequest&leaderTeam=${leaderTeam}&leaderName=${leaderName}&userEmail=${userEmail}`);
-           
-
         }
     </script>
 

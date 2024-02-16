@@ -19,14 +19,12 @@ include("header.php");
 
 
         <section class="mainSection inside" id="mainSection">
-            
             <section class="firstSec">
                 <section class="Heading">
                     <h1>My Profile</h1>
                     <hr>
                 </section>
                 
-
                 <section class="container">
                     <section class="imgSec inside">
                         <img src="../../uploads/user-pictures/<?= $userDetails["Picture"] ?>" alt="Profile Image" class="outside">
@@ -63,23 +61,16 @@ include("header.php");
                     </span>
 
                     <a class="edit" href="profile-edit.php"><i class="fas fa-edit"></i> Edit</a>
-                    
                 </section>
-
-
             </section>
 
-
-
-            <p class="footer">All Rights Reserved @Beta Group 2022</p>
-
+            <p class="footer">All Rights Reserved @ApTrack <?= date("Y") ?></p>
         </section>
 
         
         <script src="../../assets/js/dashboard.js"></script>
         <script src="../../assets/libraries/jquery.js"></script>
     </div>
-
 
 </body>
 </html>

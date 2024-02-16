@@ -1,7 +1,7 @@
 <?php
 
-require("dbConnect.php");
-include("functions.php");
+require("../../scripts/config.php");
+include("../../scripts/functions.php");
 
 // Declaring variables
 $description = $start_date = $end_date = "";
@@ -31,7 +31,7 @@ if (!empty($description) && !empty($start_date) && !empty($end_date)) {
    $sqlInsertCreateTask = mysqli_query($db_connection, $sqlCreateTask);
 
    if ($sqlInsertCreateTask) {
-      header("Location: admin_createTask.php");
+      header("Location: create-task.php");
    }
 
    mysqli_close($db_connection);

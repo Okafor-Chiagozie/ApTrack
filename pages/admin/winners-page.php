@@ -2,8 +2,8 @@
 <?php
 
 session_start();
-require("dbConnect.php");
-include("functions.php");
+require("../../scripts/config.php");
+include("../../scripts/functions.php");
 
 $_SESSION["adminMenu"] = "winners";
 
@@ -12,13 +12,12 @@ $_SESSION["adminMenu"] = "winners";
 
 <?php
 
-include("admin_header.php");
+include("header.php");
 
 ?>
 
 
 <section class="mainSection inside" id="mainSection">
-            
             <section class="firstSec">
                 <section class="Heading">
                     <h1>Winners Page</h1>
@@ -32,34 +31,27 @@ include("admin_header.php");
                 </nav>
 
                 <section class="container" id="con1">
-                    <form action="admin_makeWinner_handler.php" method="post" class="myForm">
-
+                    <form action="make-winner-handler.php" method="post" class="myForm">
                         <label>Choose Winner Team:</label>
 
                         <select class="inside" id="leader_team" name="teamName" required>
-                            <option></option>
-                            <option value="Alpha">Alpha</option>
-                            <option value="Beta">Beta</option>
-                            <option value="Gama">Gama</option>
-                            <option value="Sigma">Sigma</option>
-                            <option value="Zeta">Zeta</option>
-                            <option value="Omega">Omega</option>
-                            <option value="Delta">Delta</option>
+                           <option value="Alpha">Alpha</option>
+                           <option value="Beta">Beta</option>
+                           <option value="Gama">Gama</option>
+                           <option value="Sigma">Sigma</option>
+                           <option value="Zeta">Zeta</option>
+                           <option value="Omega">Omega</option>
+                           <option value="Delta">Delta</option>
+                           <option hidden selected>Select team</option>
                         </select>
 
                         <input type="submit" value="Make Winner" name="chooseWinner">
-
                     </form>
 
                     <span onclick="showAlert()">Reset</span>
-                    
-                    
                 </section>
                 
-                
                 <section class="container" id="con2">
-
-
                     <?php
                     $sqlHeros = "SELECT * FROM winners ORDER BY Id DESC ";
                     $sqlInsertHeros = mysqli_query($db_connection, $sqlHeros);
@@ -79,25 +71,18 @@ include("admin_header.php");
 
                         <p class="left"><i class="fa-solid fa-star"></i></p>
                         <p class="right"><i class="fa-solid fa-star"></i></p>
-                        
                     </section>
 
                     <?php }}else{ ?>
                         <p class="info"> <span>No Winner(s) available</span> </p>
                     <?php } ?>                 
-                    
                 </section>
-
             </section>
 
-
-            <p class="footer">All Rights Reserved @Beta Group 2022</p>
-
+            <p class="footer">All Rights Reserved @ApTrack <?= date("Y") ?></p>
         </section>
 
-
         <div class="alertBox" id="alertBox" >
-                
             <section>
                 <span class="leaderInfo">
                     Are you sure you want to Reset everything?
@@ -111,18 +96,12 @@ include("admin_header.php");
                     <span onclick="reset(2)">
                         No
                     </span>
-
                 </section>
-                
-            </section>
-                            
+            </section>      
         </div>
 
-        
-
-        
-        <script src="general.js"></script>
-        <script src="fmworks/jquery.js"></script>
+        <script src="../../assets/js/dashboard.js"></script>
+        <script src="../../assets/libraries/jquery.js"></script>
     </div>
 
 
@@ -130,7 +109,6 @@ include("admin_header.php");
         var navLine = document.getElementById("navLine")
         var con1 = document.getElementById("con1")
         var con2 = document.getElementById("con2")
-                
 
         function navHandle(num){
             if (num == 1){
@@ -161,12 +139,7 @@ include("admin_header.php");
             }else{
                 alertBox.style.display = "none"
             }
-            
-
         }
-
-
-        
     </script>
 
 </body>

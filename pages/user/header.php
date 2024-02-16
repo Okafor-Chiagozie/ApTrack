@@ -2,7 +2,7 @@
    if ((!isset($_SESSION["userEmail"]) || !isset($_SESSION["status"])) 
    && ($_SESSION["status"] != "user" || $_SESSION["status"] != "leader")) 
    {
-      header("Location: ../../../sign-in.php");
+      header("Location: ../../sign-in.php");
    }
 ?>
 
@@ -74,16 +74,16 @@
                </section>
 
                <section class="iconSec">
-                  <a href="user_task.php" class="icon outside" title="Tasks">
+                  <a href="task-page.php" class="icon outside" title="Tasks">
                      <i class="fas fa-tasks"></i>
                   </a>
 
-                  <a href="user_notifications.php" class="icon outside" title="Notifications">
+                  <a href="notifications.php" class="icon outside" title="Notifications">
                      <i class="fas fa-bell"></i> 
                      <?php if (mysqli_num_rows($sqlNotifyCheckInsert)) { ?> <span>.</span> <?php } ?> 
                   </a>
 
-                  <a href="user_profile.php" class="profilePic outside">
+                  <a href="profile.php" class="profilePic outside">
                      <img src="../../uploads/user-pictures/<?= $userDetails["Picture"] ?>" alt="Profile picture">
                   </a>
                </section>
@@ -198,14 +198,14 @@
                         echo '
                         <span class="inside"> 
                            <a href="team-leader-team-page.php" >
-                              <i class="fa-solid fa-star"></i> TL Page
+                              <i class="fa-solid fa-users"></i> Team Page
                            </a>
                         </span>';
                      } else {
                         echo '
                         <span> 
                            <a href="team-leader-team-page.php" >
-                              <i class="fa-solid fa-star"></i> TL Page
+                              <i class="fa-solid fa-users"></i> Team Page
                            </a>
                         </span>';
                      }

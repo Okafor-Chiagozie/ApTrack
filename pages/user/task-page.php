@@ -18,10 +18,7 @@ include("header.php");
 ?>
 
 
-
-
         <section class="mainSection inside" id="mainSection">
-            
             <section class="firstSec">
                 <section class="Heading">
                     <h1>Tasks</h1>
@@ -51,17 +48,11 @@ include("header.php");
                 <?php }}else{ ?>
                 <p class="info"> <span>No task available</span> </p>
                 <?php } ?>
-
-
             </section>
 
-
-
-            <p class="footer">All Rights Reserved @Beta Group 2022</p>
-
+            <p class="footer">All Rights Reserved @ApTrack <?= date("Y") ?></p>
         </section>
 
-        
         <script src="../../assets/js/dashboard.js"></script>
         <script src="../../assets/libraries/jquery.js"></script>
     </div>

@@ -102,7 +102,7 @@ session_start();
                </form>
 
 
-               <form action="scripts/validateAdmin.php" method="post" id="admin" class="myForm">
+               <form action="scripts/validate-admin.php" method="post" id="admin" class="myForm">
                   <section class="formItem">
                      <label for="adminEmail">Email</label>
                      <input type="email" name="adminEmail" required placeholder="Your Email" 

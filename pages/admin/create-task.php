@@ -1,8 +1,8 @@
 <?php
 
 session_start();
-require("dbConnect.php");
-include("functions.php");
+require("../../scripts/config.php");
+include("../../scripts/functions.php");
 
 $_SESSION["adminMenu"] = "create_task";
 
@@ -11,91 +11,87 @@ $_SESSION["adminMenu"] = "create_task";
 
 <?php
 
-include("admin_header.php");
+include("header.php");
 
 ?>
 
 
-      <section class="mainSection inside" id="mainSection">
+         <section class="mainSection inside" id="mainSection">
 
-         <section class="firstSec">
-            <section class="Heading">
-               <h1>Create Task</h1>
-               <hr>
-            </section>
+            <section class="firstSec">
+               <section class="Heading">
+                  <h1>Create Task</h1>
+                  <hr>
+               </section>
 
-            <nav>
-               <span onclick="navHandle(1)">Create task</span>
-               <span onclick="navHandle(2)">View task</span>
-               <hr id="navLine">
-            </nav>
+               <nav>
+                  <span onclick="navHandle(1)">Create task</span>
+                  <span onclick="navHandle(2)">View task</span>
+                  <hr id="navLine">
+               </nav>
 
-            <section class="container" id="con1">
-               <form action="admin_createTask_handler.php" method="post" class="myForm">
-
-                  <section class="description">
-                     <label for="description">Description</label>
-                     <textarea name="description" cols="30" rows="10" class="inside" required></textarea>
-                  </section>
-
-                  <section>
-                     <label for="start_date">Start Date</label>
-                     <input type="date" name="start_date" required class="inside">
-                  </section>
-
-                  <section>
-                     <label for="end_date">End Date</label>
-                     <input type="date" name="end_date" required class="inside">
-                  </section>
-
-                  <input type="submit" name="create" value="&#8593; Create">
-
-               </form>
-
-            </section>
-
-            <section class="container con2" id="con2">
-               <?php
-               $sqlTask = "SELECT * FROM task ORDER BY Id DESC";
-               $sqlTaskInsert = mysqli_query($db_connection, $sqlTask);
-
-               if (mysqli_num_rows($sqlTaskInsert)) {
-                  $num = 0;
-                  while ($taskDetails = mysqli_fetch_assoc($sqlTaskInsert)) {
-               ?>
-                  <section class="taskCon outside taskBox">
-                     <h1>Project description</h1>
-
-                     <p> <?= $taskDetails["Description"] ?></p>
+               <section class="container" id="con1">
+                  <form action="create-task-handler.php" method="post" class="myForm">
+                     <section class="description">
+                        <label for="description">Description</label>
+                        <textarea name="description" cols="30" rows="10" class="inside" required></textarea>
+                     </section>
 
                      <section>
-                        <span>Start Date: <?= $taskDetails["Startdate"] ?> </span>
-                        <span>End Date: <?= $taskDetails["Enddate"] ?> </span>
-                        <span>Duration: <?= duration($taskDetails["Startdate"], $taskDetails["Enddate"]) ?></span>
-
-                        <button onclick="deleteTask(<?= $num ?>, <?= $taskDetails['Id'] ?>)">Delete</button>
+                        <label for="start_date">Start Date</label>
+                        <input type="date" name="start_date" required class="inside">
                      </section>
-                  </section>
-               <?php 
-                  $num++; }
-                  } else { 
-               ?>
-                  <p class="info"> <span>No task available</span> </p>
-               <?php } ?>
+
+                     <section>
+                        <label for="end_date">End Date</label>
+                        <input type="date" name="end_date" required class="inside">
+                     </section>
+
+                     <input type="submit" name="create" value="&#8593; Create">
+                  </form>
+
+               </section>
+
+               <section class="container con2" id="con2">
+                  <?php
+                  $sqlTask = "SELECT * FROM task ORDER BY Id DESC";
+                  $sqlTaskInsert = mysqli_query($db_connection, $sqlTask);
+
+                  if (mysqli_num_rows($sqlTaskInsert)) {
+                     $num = 0;
+                     while ($taskDetails = mysqli_fetch_assoc($sqlTaskInsert)) {
+                  ?>
+                     <section class="taskCon outside taskBox">
+                        <h1>Project description</h1>
+
+                        <p> <?= $taskDetails["Description"] ?></p>
+
+                        <section>
+                           <span>Start Date: <?= $taskDetails["Startdate"] ?> </span>
+                           <span>End Date: <?= $taskDetails["Enddate"] ?> </span>
+                           <span>Duration: <?= duration($taskDetails["Startdate"], $taskDetails["Enddate"]) ?></span>
+
+                           <button onclick="deleteTask(<?= $num ?>, <?= $taskDetails['Id'] ?>)">Delete</button>
+                        </section>
+                     </section>
+                  <?php 
+                     $num++; }
+                     } else { 
+                  ?>
+                     <p class="info"> <span>No task available</span> </p>
+                  <?php } ?>
+               </section>
+
             </section>
 
+            <p class="footer">All Rights Reserved @ApTrack <?= date("Y") ?></p>
          </section>
 
-         <p class="footer">All Rights Reserved @Beta Group 2022</p>
-
-      </section>
 
 
 
-
-      <script src="general.js"></script>
-      <script src="fmworks/jquery.js"></script>
-
+         <script src="../../assets/js/dashboard.js"></script>
+         <script src="../../assets/libraries/jquery.js"></script>
       </div>
 
 
@@ -122,7 +118,7 @@ include("admin_header.php");
             var taskBox = document.getElementsByClassName("taskBox")
             taskBox[number].style.display = "none"
 
-            var result = await fetch(`asynchro.php?action=deleteTask&id=${Id}`);
+            var result = await fetch(`../../scripts/async.php?action=deleteTask&id=${Id}`);
 
          }
       </script>

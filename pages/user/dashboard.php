@@ -18,8 +18,6 @@ include("header.php");
 
 ?>
 
-
-
         <section class="mainSection inside" id="mainSection">
             
             <section class="firstSec">
@@ -165,7 +163,7 @@ include("header.php");
             </section> -->
 
 
-            <p class="footer">All Rights Reserved @Beta Group 2022</p>
+            <p class="footer">All Rights Reserved @ApTrack <?= date("Y") ?></p>
 
         </section>
 
@@ -173,7 +171,6 @@ include("header.php");
         <script src="../../assets/js/dashboard.js"></script>
         <script src="../../assets/libraries/jquery.js"></script>
     </div>
-
 
 </body>
 </html>

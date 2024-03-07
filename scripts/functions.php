@@ -1,131 +1,77 @@
 <?php
 
-
-// Data Purifier ==============
-function clean($data)
+/**
+ * Clean user input
+ *
+ * @param  mixed $data
+ * @return mixed
+ */
+function dataSanitizer($data) :mixed
 {
    return stripslashes(strip_tags(trim(htmlspecialchars($data))));
 }
 
 
-// Password Security ==============
-function passwordLocker($password)
+/**
+ * Redirect to specified location
+ *
+ * @param  mixed $location
+ * @return void
+ */
+function redirect(string $location) :void
+{
+   header("Location: $location");
+}
+
+
+/**
+ * Split the username into firstname and lastname
+ *
+ * @param  string $username
+ * @return array
+ */
+function usernameSplitter($username) :array
+{
+   return explode(" ", $username);
+}
+
+
+/**
+ * Encrypt and salt user password
+ *
+ * @param  string $password
+ * @return string
+ */
+function passwordLock($password) :string
 {
    return md5(md5(str_ireplace("a", "z", md5($password))) . strlen($password));
 }
 
 
-// Database Insertion for Sign up form ==============
-function dbInsert($first, $last, $em, $pass)
-{
-
-   global $db_connection;
-
-   $time = time();
-
-   $sql = "INSERT INTO user_login(Firstname, Lastname, Email, Password, Regdate)
-    VALUES('$first', '$last', '$em', '$pass', '$time')";
-
-   $sqlInsert = mysqli_query($db_connection, $sql);
-
-   if ($sqlInsert) {
-      $_SESSION["regSuccess"] = "Yes";
-      header("Refresh:2, url=sign-in.php");
-   } else {
-      $_SESSION["regFailed"] = "Yes";
-   }
-
-   mysqli_close($db_connection);
-}
-
 function userFormEdit($picture, $first, $last, $specialty)
 {
-   global $db_connection;
+   global $connection;
 
    $sql = "INSERT INTO user_login(Picture, Firstname, Lastname, Specialty)
     VALUES('$picture', '$first', '$last', '$specialty')";
 
-   $sqlInsert = mysqli_query($db_connection, $sql);
+   $sqlInsert = mysqli_query($connection, $sql);
 
    if ($sqlInsert) {
-      header("Location: profile.php");
+      redirect("profile.php");
    }
 
-   mysqli_close($db_connection);
-}
-
-// Email Checker ==============
-function emailChecker($emailCheck, $table)
-{
-   global $db_connection;
-
-   $sql = "SELECT Firstname FROM " . $table . " WHERE Email = '$emailCheck'";
-   $sqlInsert = mysqli_query($db_connection, $sql);
-
-   if (mysqli_num_rows($sqlInsert)) {
-      $_SESSION['emailExists'] = "Yes";
-   } else {
-      global $email;
-
-      $email = $emailCheck;
-   }
-}
-
-// User Login Function ==============
-function userLogin($email, $password, $table)
-{
-   global $db_connection;
-
-   $sql = "SELECT Password FROM " . $table . " WHERE Email = '$email'";
-   $sqlInsert = mysqli_query($db_connection, $sql);
-
-   if (mysqli_num_rows($sqlInsert)) {
-      // mysqli_fetch_assoc();
-      $row = mysqli_fetch_assoc($sqlInsert);
-
-      if ($row["Password"] == $password) {
-         // For Remember me
-         if (isset($_POST["userRemember"])) {
-            $_SESSION["userRemember"] = "Yes";
-         }
-
-         $sqlUser = "SELECT Tl FROM user_login WHERE Email = '$email' ";
-         $sqlInsertUser = mysqli_query($db_connection, $sqlUser);
-         $userCheck = mysqli_fetch_assoc($sqlInsertUser);
-
-         if ($userCheck["Tl"] == "0") {
-            // For knowing if the user went through the sign in
-            $_SESSION["userEmail"] = $email;
-            $_SESSION["status"] = "user";
-
-            // Going to the dashboard
-            header("Location: ../pages/user/dashboard.php");
-         } else {
-            // For knowing if the user went through the sign in
-            $_SESSION["userEmail"] = $email;
-            $_SESSION["status"] = "leader";
-
-            // Going to the dashboard
-            header("Location: ../pages/user/team-leader-dashboard.php");
-         }
-      } else {
-         $_SESSION["userWrongInfo"] = "Yes";
-         header("Location: ../sign-in.php");
-      }
-   } else {
-      $_SESSION["userWrongInfo"] = "Yes";
-      header("Location: ../sign-in.php");
-   }
+   mysqli_close($connection);
 }
 
 
 // Admin Login
 function adminLogin($email, $password, $table)
 {
-   global $db_connection;
+   global $connection;
 
    $sql = "SELECT Password FROM " . $table . " WHERE Email = '$email'";
-   $sqlInsert = mysqli_query($db_connection, $sql);
+   $sqlInsert = mysqli_query($connection, $sql);
 
    if (mysqli_num_rows($sqlInsert)) {
       // mysqli_fetch_assoc();
@@ -142,14 +88,14 @@ function adminLogin($email, $password, $table)
          $_SESSION["status"] = "admin";
 
          // Going to the dashboard
-         header("Location: ../pages/admin/dashboard.php");
+         redirect("../pages/admin/dashboard.php");
       } else {
          $_SESSION["adminWrongInfo"] = "Yes";
-         header("Location: ../sign-in.php");
+         redirect("../sign-in.php");
       }
    } else {
       $_SESSION["adminWrongInfo"] = "Yes";
-      header("Location: ../sign-in.php");
+      redirect("../sign-in.php");
    }
 }
 
@@ -157,22 +103,22 @@ function adminLogin($email, $password, $table)
 // Email Verifier
 function emailVerifier($emailCheck, $table)
 {
-   global $db_connection;
+   global $connection;
 
    $sql = "SELECT Firstname FROM " . $table . " WHERE Email = '$emailCheck'";
-   $sqlInsert = mysqli_query($db_connection, $sql);
+   $sqlInsert = mysqli_query($connection, $sql);
 
    if (mysqli_num_rows($sqlInsert)) {
       $_SESSION["verifiedUserEmail"] = $emailCheck;
-      header("Location: change-password.php");
+      redirect("change-password.php");
    } else {
 
       $sql2 = "SELECT Firstname FROM admin_login WHERE Email = '$emailCheck'";
-      $sqlInsert2 = mysqli_query($db_connection, $sql2);
+      $sqlInsert2 = mysqli_query($connection, $sql2);
 
       if (mysqli_num_rows($sqlInsert2)) {
          $_SESSION["verifiedAdminEmail"] = $emailCheck;
-         header("Location: change-password.php");
+         redirect("change-password.php");
       } else {
          $_SESSION["emailNotFound"] = "Yes";
       }
@@ -183,10 +129,10 @@ function emailVerifier($emailCheck, $table)
 //Password Changer
 function passwordChanger($email, $newPassword, $table)
 {
-   global $db_connection;
+   global $connection;
 
    $sql = "UPDATE " . $table . " set Password = '$newPassword' WHERE Email = '$email'";
-   $sqlInsert = mysqli_query($db_connection, $sql);
+   $sqlInsert = mysqli_query($connection, $sql);
 
    if ($sqlInsert) {
       $_SESSION["passChangeSuccess"] = "Yes";
@@ -195,17 +141,17 @@ function passwordChanger($email, $newPassword, $table)
       $_SESSION["passChangeFail"] = "Yes";
    }
 
-   mysqli_close($db_connection);
+   mysqli_close($connection);
 }
 
 
 function identity()
 {
-   global $db_connection;
+   global $connection;
 
    // Getting all the users details
-   $sql = "SELECT * FROM user_login WHERE Email = '{$_SESSION["userEmail"]}' ";
-   $sqlInsert = mysqli_query($db_connection, $sql);
+   $sql = "SELECT * FROM `users` WHERE Email = '{$_SESSION["userEmail"]}' ";
+   $sqlInsert = mysqli_query($connection, $sql);
 
    global $userDetails;
    $userDetails = mysqli_fetch_assoc($sqlInsert);

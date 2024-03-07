@@ -1,57 +1,5 @@
 <?php
-
-require("scripts/config.php");
-include("scripts/functions.php");
 session_start();
-
-$username = $firstname = $lastname = $email = $password = $confirm = "";
-
-// Setting up the variables ================================================
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-   if (isset($_POST["create"])) {
-
-      // Username ============
-      if (!empty($_POST["username"])) {
-         $username = $_POST["username"];
-
-         if (count(explode(" ", $username)) > 1) {
-            $nameList = explode(" ", $username);
-
-            $firstname = clean($nameList[0]);
-            $lastname = clean($nameList[1]);
-         } else if (count(explode(" ", $username)) == 1) {
-            $firstname = clean($username);
-            $lastname = "Lastname";
-         }
-      }
-
-      // Email ===============
-      if (!empty($_POST["email"])) {
-         $emailCheck = clean($_POST["email"]);
-
-         emailChecker($emailCheck, "user_login");
-      }
-
-      // Password ==============
-      if (!empty($_POST["password"]) && !empty($_POST["confirm"])) {
-
-         if ($_POST["password"] != $_POST["confirm"]) {
-            $_SESSION['differentPassword'] = "Yes";
-         } else {
-            $password = passwordLocker(clean($_POST["password"]));
-            $confirm = clean($_POST["confirm"]);
-         }
-      }
-   }
-}
-
-// Inserting into the database ==================================================
-if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($password)) {
-
-   dbInsert($firstname, $lastname, $email, $password);
-}
-
 ?>
 
 
@@ -94,7 +42,7 @@ if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($passwor
                <h1>ApTrack</h1>
             </section>
 
-            <form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" class="myForm">
+            <form action="scripts/register-handler.php" method="post" class="myForm">
                <section class="formHeading">
                   <h1>Create an account</h1>
                   <span>Already have an account? <a href="sign-in.php">Login</a></span>
@@ -109,7 +57,7 @@ if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($passwor
                   <label for="email">Email</label>
                   <input type="email" name="email" required placeholder="Your Email" maxlength="40">
                   <?php if (isset($_SESSION["emailExists"]) && ($_SESSION["emailExists"] == "Yes")) {
-                     echo "<span class='error'>Email already exits</span>";
+                     echo "<span class='error'>Email already exists</span>";
                      $_SESSION["emailExists"] = "No";
                   } ?>
                </section>
@@ -143,7 +91,7 @@ if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($passwor
                </section>
 
                <section class="submitButton">
-                  <input type="submit" value="Create account" name="create">
+                  <input type="submit" value="Create account" name="register">
                </section>
 
                <section class="orSection">
@@ -169,11 +117,6 @@ if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($passwor
 
       <!-- Toast alert  -->
       <?php
-      if (isset($_SESSION["regSuccess"]) && ($_SESSION["regSuccess"] == "Yes")) {
-         echo "<script> toastr.success('You will be redirected shortly.', 'Registration Successful', {timeOut: 5000}) </script>";
-         $_SESSION["regSuccess"] = "No";
-      }
-
       if (isset($_SESSION["regFailed"]) && ($_SESSION["regFailed"] == "Yes")) {
          echo "<script> toastr.error('You were unable to be registered.', 'Registration Unsuccessful', {timeOut: 5000}) </script>";
          $_SESSION["regFailed"] = "No";

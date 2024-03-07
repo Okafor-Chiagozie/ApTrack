@@ -5,7 +5,7 @@ session_start();
 require("../../scripts/config.php");
 include("../../scripts/functions.php");
 
-$_SESSION["userMenu"] = "leader_dash";
+$_SESSION["userMenu"] = "leader_dashboard";
 
 identity();
 

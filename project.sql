@@ -1,52 +1,58 @@
 CREATE TABLE users(
-    id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT, 
-    firstname VARCHAR(20) NOT NULL,
-    lastname VARCHAR(20) NOT NULL,
-    email VARCHAR(40) NOT NULL UNIQUE,
-    password VARCHAR(100) NOT NULL,
-    picture VARCHAR(50) NOT NULL DEFAULT 'user.jfif',
-    regdate VARCHAR(20) NOT NULL,
-    specialty VARCHAR(20) NOT NULL DEFAULT 'Not Specified',
-    team_name VARCHAR(20) NOT NULL DEFAULT 'user_login',
-    team_leader VARCHAR(2) NOT NULL DEFAULT '0',
-    winner VARCHAR(2) NOT NULL DEFAULT '0'
+   id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+   firstname VARCHAR(50) NOT NULL,
+   lastname VARCHAR(50) NOT NULL,
+   email VARCHAR(100) NOT NULL UNIQUE,
+   password VARCHAR(100) NOT NULL,
+   picture VARCHAR(50) NOT NULL DEFAULT 'user.jfif',
+   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+   specialty VARCHAR(40) NOT NULL DEFAULT 'Not Specified',
+   team_id INT UNSIGNED NULL,
+   FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE CASCADE
 );
 
+INSERT INTO `users` (`firstname`, `lastname`, `email`, `password`) VALUES
+('chiagozie', 'okafor', 'collincity111@gmail.com', '554408941e206431e4084b24b3902ffc');
+
 CREATE TABLE admins(
-    id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT, 
-    firstname VARCHAR(20) NOT NULL,
-    lastname VARCHAR(20) NOT NULL,
-    email VARCHAR(40) NOT NULL UNIQUE,
-    password VARCHAR(100) NOT NULL,
+   id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+   firstname VARCHAR(50) NOT NULL,
+   lastname VARCHAR(50) NOT NULL,
+   email VARCHAR(100) NOT NULL UNIQUE,
+   password VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE notifications(
-    id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT, 
-    team_name VARCHAR(20) NOT NULL,
-    team_leader VARCHAR(40) NOT NULL,
-    user_email VARCHAR(40) NOT NULL
+   id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+   user_id INT UNSIGNED NOT NULL,
+   team_id INT UNSIGNED NOT NULL,
+   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+   FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE CASCADE
 );
 
 CREATE TABLE tasks(
-    id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT, 
-    description TEXT,
-    start_date VARCHAR(15) NOT NULL,
-    end_date VARCHAR(15) NOT NULL
+   id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+   description TEXT NULL,
+   start_date DATE NOT NULL,
+   end_date DATE NOT NULL
 );
 
 CREATE TABLE teams(
-    id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT, 
-    team_name VARCHAR(10) NOT NULL,
-    document VARCHAR(50) NOT NULL DEFAULT 'Nothing',
-    disqualify VARCHAR(2) NOT NULL DEFAULT '0'
+   id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+   name VARCHAR(10) NOT NULL,
+   document VARCHAR(50) NOT NULL DEFAULT 'Nothing',
+   disqualify CHAR(1) NOT NULL DEFAULT '0',
+   winner CHAR(1) NOT NULL DEFAULT '0',
+   leader_id INT UNSIGNED NULL
 );
 
+ALTER TABLE teams add FOREIGN KEY (leader_id) REFERENCES users(id) ON DELETE CASCADE;
+
+
 CREATE TABLE winners(
-    id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT, 
-    the_year VARCHAR(5) NOT NULL,
-    start_month VARCHAR(2) NOT NULL,
-    end_month VARCHAR(2) NOT NULL,
-    team_name VARCHAR(10) NOT NULL,
-    team_leader VARCHAR(40) NOT NULL,
-    names TEXT NOT NULL
+   id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+   team_id INT UNSIGNED NOT NULL,
+   task_id INT UNSIGNED NOT NULL,
+   FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE CASCADE,
+   FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE CASCADE
 );

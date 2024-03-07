@@ -12,6 +12,7 @@ session_start();
       <title>Login - ApTrack</title>
       <link rel="stylesheet" href="assets/fontawesome-free-6.1.1-web/css/all.css">
       <link rel="stylesheet" href="assets/css/user/sign-in.css">
+      <link rel="stylesheet" href="assets/libraries/toastr.css">
    </head>
 
    <body>
@@ -53,17 +54,17 @@ session_start();
                   </span>
                </section>
 
-               <form action="scripts/validate-user.php" method="post" id="user" class="myForm">
+               <form action="scripts/user-login-handler.php" method="post" id="user" class="myForm">
                   <section class="formItem">
                      <label for="userEmail">Email</label>
-                     <input type="email" name="userEmail" required placeholder="Your Email" 
+                     <input type="email" name="email" required placeholder="Your Email" 
                      value="<?php if (isset($_SESSION["userRemember"])) {echo $_SESSION["userEmail"]; } ?>">
                   </section>
 
                   <section class="duoFormItem">
                      <section class="formItem">
                         <label for="userPassword">Password</label>
-                        <input type="password" name="userPassword" required placeholder="Your Password" autocomplete>
+                        <input type="password" name="password" required placeholder="Your Password" autocomplete>
                      </section>
 
                      <?php if (isset($_SESSION["userWrongInfo"]) && ($_SESSION["userWrongInfo"] == "Yes")) {
@@ -73,7 +74,7 @@ session_start();
 
                      <span>
                         <span>
-                           <input type="checkbox" name="userRemember">
+                           <input type="checkbox" name="remember_me">
                            <span>Remember me</span>
                         </span>
 
@@ -82,7 +83,7 @@ session_start();
                   </section>
 
                   <section class="submitButton">
-                     <input type="submit" value="Login" name="userLogin">
+                     <input type="submit" value="Login" name="user_login">
 
                      <span>
                         <span>Don't have an account? <a href="index.php">Register</a></span>
@@ -152,6 +153,19 @@ session_start();
          </section>
       </div>
 
+      <script src="assets/libraries/jquery.js"></script>
+      <script src="assets/libraries/toastr.min.js"></script>
       <script src="assets/js/sign-in.js"></script>
+      <?php
+      if (isset($_SESSION["regSuccess"]) && ($_SESSION["regSuccess"] == "Yes")) {
+         echo "<script> toastr.success('Kindly login to continue.', 'Registration Successful', {timeOut: 5000}) </script>";
+         $_SESSION["regSuccess"] = "No";
+      }
+
+      if (isset($_SESSION["loginFail"]) && ($_SESSION["LoginFail"] == "Yes")) {
+         echo "<script> toastr.error('Try logging in again.', 'Login Unsuccessful', {timeOut: 5000}) </script>";
+         $_SESSION["loginFail"] = "No";
+      }
+      ?>
    </body>
 </html>

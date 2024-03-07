@@ -31,9 +31,9 @@
             echo " <link rel='stylesheet' href='../../assets/css/user/notifications.css'> ";
          } else if ($_SESSION["userMenu"] == "winner") {
             echo " <link rel='stylesheet' href='../../assets/css/user/winner-page.css'> ";
-         } else if ($_SESSION["userMenu"] == "leader") {
+         } else if ($_SESSION["userMenu"] == "leader_page") {
             echo " <link rel='stylesheet' href='../../assets/css/user/team-leader/team-page.css'> ";
-         } else if ($_SESSION["userMenu"] == "leader_dash") {
+         } else if ($_SESSION["userMenu"] == "leader_dashboard") {
             echo " <link rel='stylesheet' href='../../assets/css/user/team-leader/dashboard.css'> ";
          }
       ?>
@@ -41,11 +41,6 @@
 
    <body>
       <div class="mainDiv">
-         <?php
-            $sqlNotifyCheck = "SELECT * FROM notify WHERE User_email = '{$userDetails['Email']}' ";
-            $sqlNotifyCheckInsert = mysqli_query($db_connection, $sqlNotifyCheck);
-         ?>
-
          <header class="mainHeader" id="mainHeader">
             <section class="logoSec">
                <section>
@@ -63,8 +58,8 @@
 
             <section class="navSec">
                <section class="searchSec">
-                  <h1>Welcome 
-                     <?= " " . ucfirst($userDetails["Firstname"]) . " " . ucfirst($userDetails["Lastname"]); ?>
+                  <h1>
+                     Welcome <?= ucwords($user_details["firstname"] . " " . $user_details["lastname"]); ?>
                   </h1>
 
                   <!-- <section>
@@ -80,11 +75,11 @@
 
                   <a href="notifications.php" class="icon outside" title="Notifications">
                      <i class="fas fa-bell"></i> 
-                     <?php if (mysqli_num_rows($sqlNotifyCheckInsert)) { ?> <span>.</span> <?php } ?> 
+                     <span>.</span> 
                   </a>
 
                   <a href="profile.php" class="profilePic outside">
-                     <img src="../../uploads/user-pictures/<?= $userDetails["Picture"] ?>" alt="Profile picture">
+                     <img src="../../uploads/user-pictures/<?= $user_details["picture"] ?>" alt="Profile picture">
                   </a>
                </section>
             </section>
@@ -92,125 +87,35 @@
 
          <section class="leftSection" id="leftSection">
             <section class="menuSec">
-               <?php 
-                  if ($_SESSION["userMenu"] == "dashboard" 
-                  || $_SESSION["userMenu"] == "leader_dash") { ?>
-                  <span class="inside"> 
-                     <a href="
-                     <?php 
-                        if ($userDetails["Tl"] == "0") {
-                           echo 'dashboard.php';
-                        } else {
-                           echo 'team-leader-dashboard.php';
-                        } ?> ">
-                        <i class="fa fa-cubes"></i> Dashboard</a>
-                  </span>
-                  <?php } else { ?>
-                  <span> 
-                     <a href="
-                     <?php 
-                     if ($userDetails["Tl"] == "0") {
-                        echo 'dashboard.php';
-                     } else {
-                        echo 'team-leader-dashboard.php';
-                     } ?>">
-                     <i class="fa fa-cubes"></i> Dashboard</a></span>
-               <?php } ?>
+               <span class="<?php if($_SESSION['userMenu'] == 'dashboard'): ?> inside <?php endif; ?>"> 
+                  <a href="dashboard.php">
+                  <i class="fa fa-cubes"></i> Dashboard</a>
+               </span>
 
-               <?php
-                  if ($_SESSION["userMenu"] == "profile" 
-                  || $_SESSION["userMenu"] == "profile_edit") {
-                     echo ' 
-                     <span class="inside"> 
-                        <a href="profile.php" >
-                           <i class="fa fa-user"></i> Profile
-                        </a>
-                     </span>';
-                  } else {
-                     echo ' 
-                     <span> 
-                        <a href="profile.php" >
-                           <i class="fa fa-user"></i> Profile
-                        </a>
-                     </span>';
-                  }
+               <span class="<?php if($_SESSION['userMenu'] == 'profile'): ?> inside <?php endif; ?>"> 
+                  <a href="profile.php">
+                  <i class="fa fa-user"></i> Profile</a>
+               </span>
 
-                  if ($_SESSION["userMenu"] == "task") {
-                     echo ' 
-                     <span class="inside"> 
-                        <a href="task-page.php" >
-                           <i class="fa fa-tasks"></i> Task
-                        </a>
-                     </span>';
-                  } else {
-                     echo ' 
-                     <span> 
-                        <a href="task-page.php" >
-                           <i class="fa fa-tasks"></i> Task
-                        </a>
-                     </span>';
-                  }
-               ?>
+               <span class="<?php if($_SESSION['userMenu'] == 'task'): ?> inside <?php endif; ?>"> 
+                  <a href="task-page.php">
+                  <i class="fa fa-tasks"></i> Task</a>
+               </span>
 
-               <?php
-                  if ($_SESSION["userMenu"] == "notifications") { ?>
-                     <span class="inside"> 
-                        <a href="notifications.php"> 
-                           <i class="fas fa-bell"></i> Notifications 
-                           <?php if (mysqli_num_rows($sqlNotifyCheckInsert)) { ?> 
-                              <span class="dot">.</span> 
-                           <?php } ?> 
-                        </a>
-                     </span>
-               <?php 
-                  } else { ?>
-                     <span> 
-                        <a href="notifications.php"> 
-                           <i class="fas fa-bell"></i> Notifications 
-                           <?php if (mysqli_num_rows($sqlNotifyCheckInsert)) { ?> 
-                              <span class="dot">.</span> 
-                           <?php } ?> 
-                        </a>
-                     </span>
-               <?php } ?>
+               <span class="<?php if($_SESSION['userMenu'] == 'notifications'): ?> inside <?php endif; ?>"> 
+                  <a href="notifications.php">
+                  <i class="fas fa-bell"></i> Notifications <span class="dot">.</span></a>
+               </span>
 
-               <?php
-                  if ($userDetails["Winner"] == "1") {
-                     if ($_SESSION["userMenu"] == "winner") {
-                        echo '
-                        <span class="inside"> 
-                           <a href="winner-page.php">
-                              <i class="fa-solid fa-award"></i> Winners
-                           </a>
-                        </span>';
-                     } else {
-                        echo '
-                        <span> 
-                           <a href="winner-page.php" >
-                              <i class="fa-solid fa-award"></i> Winners
-                           </a>
-                        </span>';
-                     }
-                  }
+               <span class="<?php if($_SESSION['userMenu'] == 'winner'): ?> inside <?php endif; ?>"> 
+                  <a href="winner-page.php">
+                  <i class="fa-solid fa-award"></i> Winners</a>
+               </span>
 
-                  if (($userDetails["Tl"] == "1") && ($userDetails["Winner"] == "0")) {
-                     if ($_SESSION["userMenu"] == "leader") {
-                        echo '
-                        <span class="inside"> 
-                           <a href="team-leader-team-page.php" >
-                              <i class="fa-solid fa-users"></i> Team Page
-                           </a>
-                        </span>';
-                     } else {
-                        echo '
-                        <span> 
-                           <a href="team-leader-team-page.php" >
-                              <i class="fa-solid fa-users"></i> Team Page
-                           </a>
-                        </span>';
-                     }
-                  }
-               ?>
+               <span class="<?php if($_SESSION['userMenu'] == 'leader_page'): ?> inside <?php endif; ?>"> 
+                  <a href="team-leader-team-page.php">
+                  <i class="fa-solid fa-users"></i> Team Page</a>
+               </span>
             </section>
 
             <section class="otherSec">

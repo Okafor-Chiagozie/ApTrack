@@ -3,11 +3,11 @@
 session_start();
 require("../../scripts/config.php");
 include("../../scripts/functions.php");
+include("../../scripts/database-functions.php");
 
 $_SESSION["userMenu"] = "notifications";
 
-identity();
-
+$user_details = fetchUserDetails($_SESSION["userEmail"]);
 ?>
 
 
@@ -17,33 +17,21 @@ include("header.php");
 
 ?>
 
-<section class="mainSection inside" id="mainSection">
-
-   <section class="firstSec">
-      <section class="Heading">
-         <h1>My Notifications</h1>
-         <hr>
-      </section>
-
-      <?php
-      $sqlNotify = "SELECT * FROM notify WHERE User_email = '{$userDetails['Email']}' ORDER BY Id DESC ";
-      $sqlNotifyInsert = mysqli_query($db_connection, $sqlNotify);
-
-      if (mysqli_num_rows($sqlNotifyInsert)) {
-         $num = 0;
-         while ($notifyDetails = mysqli_fetch_assoc($sqlNotifyInsert)) {
-
-      ?>
-
+   <section class="mainSection inside" id="mainSection">
+      <section class="firstSec">
+         <section class="Heading">
+            <h1>My Notifications</h1>
+            <hr>
+         </section>
             <section class="container outside">
                <span>
                   <span class="one">Team Name:</span>
-                  <span><?= strtoupper($notifyDetails["Team_name"]) ?></span>
+                  <span></span>
                </span>
 
                <span>
                   <span class="one">Team Leader:</span>
-                  <span><?= ucwords($notifyDetails["Team_leader"]) ?></span>
+                  <span></span>
                </span>
 
                <span>
@@ -51,33 +39,21 @@ include("header.php");
                </span>
 
                <section>
-                  <span class="accept" onclick="accept(<?= $num ?>, '<?= $notifyDetails['User_email'] ?>', '<?= $notifyDetails['Id'] ?>', '<?= $notifyDetails['Team_name'] ?>')">Accept</span>
+                  <span class="accept" onclick="">Accept</span>
+                  <!-- accept( $num , '$notifyDetails['User_email']', '$notifyDetails['Id']', '$notifyDetails['Team_name']') -->
 
-
-
-                  <span class="decline" onclick="decline(<?= $num ?>, '<?= $notifyDetails['User_email'] ?>', '<?= $notifyDetails['Id'] ?>')">
-                     Decline</span>
-
-
-
+                  <span class="decline" onclick="">Decline</span>
+                  <!-- decline($num>, '$notifyDetails['User_email']', '$notifyDetails['Id']') -->
                </section>
-
             </section>
 
-         <?php $num++;
-         }
-      } else { ?>
-         <p class="info"> <span>No notification available</span> </p>
-      <?php } ?>
+         <!-- <p class="info"> <span>No notification available</span> </p> -->
+      </section>
 
 
+
+      <p class="footer">All Rights Reserved @ApTrack <?= date("Y") ?></p>
    </section>
-
-
-
-   <p class="footer">All Rights Reserved @ApTrack <?= date("Y") ?></p>
-
-</section>
 </div>
 
 
@@ -103,5 +79,4 @@ include("header.php");
 </script>
 
 </body>
-
 </html>

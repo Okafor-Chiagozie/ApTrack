@@ -8,7 +8,7 @@
  * @param  string $table
  * @return string
  */
-function emailChecker($email, $table) :string
+function emailChecker($email, $table) : ?string
 {
    global $connection;
    
@@ -21,7 +21,7 @@ function emailChecker($email, $table) :string
    if($stmt->fetch())
       return $password;
 
-   return "";
+   return null;
 }
 
 
@@ -34,7 +34,7 @@ function emailChecker($email, $table) :string
  * @param  string $password
  * @return bool
  */
-function addNewUserToDatabase($firstname, $lastname, $email, $password) :bool
+function addNewUserToDatabase($firstname, $lastname, $email, $password) : ?bool
 {
    global $connection;
 
@@ -54,11 +54,11 @@ function addNewUserToDatabase($firstname, $lastname, $email, $password) :bool
  * @param  mixed $email
  * @return void
  */
-function fetchUserDetails($email)
+function getUserDetails($email) : ?array
 {
    global $connection;
    
-   $query_1 = "SELECT * FROM `users`  WHERE `email` = ?";
+   $query_1 = "SELECT * FROM `users` WHERE `email` = ?";
    $stmt = $connection->prepare($query_1);
    $stmt->bind_param("s", $email);
    $stmt->execute();
@@ -83,5 +83,80 @@ function fetchUserDetails($email)
    }
 
    return $data_1;
+}
+
+/**
+ * Get all members of a team
+ *
+ * @param  mixed $team_id
+ * @return array
+ */
+function getTeamMembers($team_id, $team_leader_id) : ?array
+{
+   global $connection;
+   
+   $query = "SELECT * FROM `users` WHERE `team_id` = ? AND `id` != ?";
+   $stmt = $connection->prepare($query);
+   $stmt->bind_param("ii", $team_id, $team_leader_id);
+   $stmt->execute();
+   $result = $stmt->get_result();
+   $data = $result->fetch_all(MYSQLI_ASSOC);
+   
+   return $data;
+}
+
+
+/**
+ * Get the Id of a team's team leader
+ *
+ * @param  mixed $team_id
+ * @return int
+ */
+function getTeamLeaderId($team_id) : ?int
+{
+   global $connection;
+   
+   $query = "SELECT `leader_id` FROM `teams` WHERE `id` = ?";
+   $stmt = $connection->prepare($query);
+   $stmt->bind_param("i", $team_id);
+   $stmt->execute();
+   $stmt->bind_result($team_leader_id);
+
+   if($stmt->fetch())
+      return $team_leader_id;
+
+   return null;
+}
+
+
+function getTeamLeaderDetails($id) : ?array
+{
+   global $connection;
+   
+   $query = "SELECT * FROM `users` WHERE `id` = ?";
+   $stmt = $connection->prepare($query);
+   $stmt->bind_param("i", $id);
+   $stmt->execute();
+   $result = $stmt->get_result();
+   $data = $result->fetch_assoc();
+
+   return $data;
+}
+
+
+function getAllTask($limit = 0) : ?array
+{
+   global $connection;
+   
+   $query = "SELECT * FROM `tasks` ORDER BY `id` DESC";
+   if($limit != 0)
+      $query = "SELECT * FROM `tasks` ORDER BY `id` DESC LIMIT $limit";
+   
+   $stmt = $connection->prepare($query);
+   $stmt->execute();
+   $result = $stmt->get_result();
+   $data = $result->fetch_all(MYSQLI_ASSOC);
+   
+   return $data;
 }
 

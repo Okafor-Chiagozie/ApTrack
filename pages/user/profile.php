@@ -6,18 +6,10 @@ include("../../scripts/functions.php");
 include("../../scripts/database-functions.php");
 
 $_SESSION["userMenu"] = "profile";
-
-$user_details = fetchUserDetails($_SESSION["userEmail"]);
-
-?>
-
-
-<?php
+$user_details = getUserDetails($_SESSION["userEmail"]);
 
 include("header.php");
-
 ?>
-
 
    <section class="mainSection inside" id="mainSection">
       <section class="firstSec">
@@ -48,7 +40,7 @@ include("header.php");
 
                <span>
                   <span class="one">Team:</span>
-                  <span class="two">Alpha</span>
+                  <span class="two"><?= ucfirst($user_details['name']) ?></span>
                </span>
 
                <span>

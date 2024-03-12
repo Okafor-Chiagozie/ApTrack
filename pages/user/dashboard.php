@@ -7,15 +7,9 @@ include("../../scripts/functions.php");
 include("../../scripts/database-functions.php");
 
 $_SESSION["userMenu"] = "dashboard";
-
-$user_details = fetchUserDetails($_SESSION["userEmail"]);
-?>
-
-
-<?php
+$user_details = getUserDetails($_SESSION["userEmail"]);
 
 include("header.php");
-
 ?>
 
    <section class="mainSection inside" id="mainSection">
@@ -25,53 +19,55 @@ include("header.php");
                <hr>
             </section>
 
-         <!-- <p class="info"> <span>Not in any Team</span> </p> -->
-
+            <?php if($user_details["team_id"]): ?>
             <section class="container">
+               <?php $team_leader = getTeamLeaderDetails($user_details["leader_id"]); ?>
                <section class="teamBox outside" title="Team Leader">
                   <section class="imgSec inside">
-                        <img src="../../uploads/user-pictures/user.jfif" alt="Profile picture" class="outside">
+                     <img src="../../uploads/user-pictures/<?= $team_leader['picture'] ?>" alt="Profile picture" class="outside">
                   </section>
 
                   <span class="infoSec">
-                        <h1>Chiagozie Okafor</h1>
-                        <span>Backend Developer</span>
+                     <h1><?= ucwords($team_leader['firstname']." ".$team_leader['lastname']) ?></h1>
+                     <span><?= $team_leader['specialty'] ?></span>
                   </span>
 
-                  <span class="teamName">
-                     Alpha
-                  </span>
+                  <span class="teamName"><?= ucfirst($user_details['name']) ?></span>
 
                   <p><i class="fa-solid fa-star"></i></p>
-
                </section>
 
+               <?php $team_members = getTeamMembers($user_details['team_id'], getTeamLeaderId($user_details['team_id'])); ?>
                <section class="teamIcon outside">
-                  <span>3 &nbsp;&nbsp;Members&nbsp;&nbsp; <i class="fa fa-users"></i> </span>
+                  <span><?= count($team_members) + 1 ?> &nbsp;Members&nbsp; <i class="fa fa-users"></i> </span>
                </section>
 
                <hr>
                
+               <?php foreach ($team_members as $team_member):?>
                <section class="teamBox outside">
                   <section class="imgSec inside">
-                        <img src="../../uploads/user-pictures/user.jfif" alt="Profile picture" class="outside">
+                     <img src="../../uploads/user-pictures/<?= $team_member['picture'] ?>" alt="Profile picture" class="outside">
                   </section>
 
                   <span class="infoSec">
-                        <h1>Chiagozie Okafor</h1>
-                        <span>Backend Developer</span>
+                     <h1><?= ucwords($team_member['firstname']." ".$team_member['lastname']) ?></h1>
+                     <span>Backend Developer</span>
                   </span>
 
-                  <span class="teamName">
-                  Alpha
-                  </span>
+                  <span class="teamName"><?= ucfirst($user_details['name']) ?></span>
+               </section>
+               <?php endforeach; ?>
 
-               </section> 
-
-               <!-- <div class="removed"> 
+               <?php if($user_details['disqualify']): ?>
+               <div class="removed"> 
                   <p>Disqualified</p> 
-               </div> -->               
-            </section>                          
+               </div>
+               <?php endif; ?>      
+            </section>
+            <?php else: ?>
+            <p class="info"> <span>Not in any Team</span> </p>                       
+            <?php endif; ?>
       </section>
 
       <section class="secondSec">
@@ -79,6 +75,12 @@ include("header.php");
                <h1>Latest Task</h1>
                <hr>
             </section>
+            
+            <?php 
+            $tasks = getAllTask(1);
+            if($tasks):
+               foreach ($tasks as $task):
+            ?>
             
             <section class="container outside">
                <h1>Project description</h1>
@@ -95,8 +97,12 @@ include("header.php");
                   <span>Duration: </span>
                </section>
             </section>
-            
-            <!-- <p class="info"> <span>No task available</span> </p>                 -->
+            <?php 
+               endforeach;
+            else:
+            ?>
+            <p class="info"> <span>No task available</span> </p>                
+            <?php endif; ?>            
       </section>
 
       <!-- <section class="secondSec">

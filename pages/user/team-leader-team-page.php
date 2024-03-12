@@ -8,7 +8,7 @@ include("../../scripts/database-functions.php");
 
 $_SESSION["userMenu"] = "leader_page";
 
-$user_details = fetchUserDetails($_SESSION["userEmail"]);
+$user_details = getUserDetails($_SESSION["userEmail"]);
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){

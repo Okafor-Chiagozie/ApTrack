@@ -7,7 +7,7 @@ include("../../scripts/database-functions.php");
 
 $_SESSION["userMenu"] = "task";
 
-$user_details = fetchUserDetails($_SESSION["userEmail"]);
+$user_details = getUserDetails($_SESSION["userEmail"]);
 ?>
 
 
@@ -25,13 +25,18 @@ include("header.php");
                <hr>
             </section>
 
+            <?php 
+            $tasks = getAllTask(1);
+            if($tasks):
+               foreach ($tasks as $task):
+            ?>
             <section class="container outside">
                <h1>Project description</h1>
 
                <p>
-               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae, deserunt rerum 
-               architecto quasi ut aut tenetur itaque praesentium voluptatibus labore ipsum cum 
-               reiciendis vero. Molestias tenetur aperiam earum quos repellendus.
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae, deserunt rerum 
+                  architecto quasi ut aut tenetur itaque praesentium voluptatibus labore ipsum cum 
+                  reiciendis vero. Molestias tenetur aperiam earum quos repellendus.
                </p>
 
                <section>
@@ -41,8 +46,12 @@ include("header.php");
                </section>
 
             </section>
-            
-            <!-- <p class="info"> <span>No task available</span> </p> -->
+            <?php 
+               endforeach;
+            else:
+            ?>
+            <p class="info"> <span>No task available</span> </p>
+            <?php endif; ?>
       </section>
 
       <p class="footer">All Rights Reserved @ApTrack <?= date("Y") ?></p>

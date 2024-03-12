@@ -7,7 +7,7 @@ include("../../scripts/database-functions.php");
 
 $_SESSION["userMenu"] = "notifications";
 
-$user_details = fetchUserDetails($_SESSION["userEmail"]);
+$user_details = getUserDetails($_SESSION["userEmail"]);
 ?>
 
 

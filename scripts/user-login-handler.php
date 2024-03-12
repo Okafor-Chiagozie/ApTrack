@@ -28,27 +28,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user_login'])) {
       $_SESSION["userRemember"] = "Yes";
    }
 
-   $user_details = fetchUserDetails($email);
 
+   $user_details = getUserDetails($email);
 
-
-   // Checking if the team_id exists
-   // and if so checks if the team_id == team.id
-   // that's the only thing that should be checked cause
-   // even if the team_id exists and the team_id !== team.id (is not equal to)
-   // it still will go to the normal dashboard
-   if ($user_details["team_id"]) {
-   
-      // if ($user_details["team_id"] == $user_details['']) {
+   if ($user_details["team_id"] 
+   && $user_details["team_id"] == $user_details['leader_id']) {
          
-         // For knowing if the user went through the sign in
-         $_SESSION["userEmail"] = $email;
-         $_SESSION["status"] = "leader";
-   
-         // Going to the dashboard
-         redirect("../pages/user/team-leader-dashboard.php");
-         return;
-      // }
+      // For knowing if the user went through the sign in
+      $_SESSION["userEmail"] = $email;
+      $_SESSION["status"] = "leader";
+
+      // Going to the dashboard
+      redirect("../pages/user/team-leader-dashboard.php");
+      return;
    }
 
    // For knowing if the user went through the sign in

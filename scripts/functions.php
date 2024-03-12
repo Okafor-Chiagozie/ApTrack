@@ -145,19 +145,6 @@ function passwordChanger($email, $newPassword, $table)
 }
 
 
-function identity()
-{
-   global $connection;
-
-   // Getting all the users details
-   $sql = "SELECT * FROM `users` WHERE Email = '{$_SESSION["userEmail"]}' ";
-   $sqlInsert = mysqli_query($connection, $sql);
-
-   global $userDetails;
-   $userDetails = mysqli_fetch_assoc($sqlInsert);
-}
-
-
 function month($num)
 {
    $correctMonth = "";

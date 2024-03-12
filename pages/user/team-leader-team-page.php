@@ -128,22 +128,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
       <!-- Second Partttttttttttt -->
       <section class="secondSec">
-            <section class="Heading">
-               <h1>Project Submission</h1>
-               <hr>
-            </section>
+         <section class="Heading">
+            <h1>Project Submission</h1>
+            <hr>
+         </section>
+         
+         <section class="container">
             
-            <section class="container">
-               
-               <form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data" class="myForm">
-                  <section class="projectUpload">
-                        <label for="teamDocument">Project Upload</label>
-                        <input type="file" id="file" name="teamDocument" size="10" class="inside">
-                  </section>
+            <form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data" class="myForm">
+               <section class="projectUpload">
+                     <label for="teamDocument">Project Upload</label>
+                     <input type="file" id="file" name="teamDocument" size="10" class="inside">
+               </section>
 
-                  <input type="submit" name="upload" value="&#8593; Upload">
-               </form>
-            </section>  
+               <input type="submit" name="upload" value="&#8593; Upload">
+            </form>
+         </section>  
       </section>
 
       <p class="footer">All Rights Reserved @ApTrack <?= date("Y") ?></p>

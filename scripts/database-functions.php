@@ -8,7 +8,7 @@
  * @param  string $table
  * @return string
  */
-function emailChecker($email, $table) : ?string
+function emailChecker(string $email, string $table) : ?string
 {
    global $connection;
    
@@ -34,7 +34,8 @@ function emailChecker($email, $table) : ?string
  * @param  string $password
  * @return bool
  */
-function addNewUserToDatabase($firstname, $lastname, $email, $password) : ?bool
+function addNewUserToDatabase(string $firstname, string $lastname, 
+string $email, string $password) : ?bool
 {
    global $connection;
 
@@ -51,10 +52,10 @@ function addNewUserToDatabase($firstname, $lastname, $email, $password) : ?bool
 /**
  * Fetch user details from the database
  *
- * @param  mixed $email
- * @return void
+ * @param  string $email
+ * @return array
  */
-function getUserDetails($email) : ?array
+function getUserDetails(string $email) : ?array
 {
    global $connection;
    
@@ -85,13 +86,15 @@ function getUserDetails($email) : ?array
    return $data_1;
 }
 
+
 /**
  * Get all members of a team
  *
- * @param  mixed $team_id
+ * @param  int $team_id
+ * @param  int $team_leader_id
  * @return array
  */
-function getTeamMembers($team_id, $team_leader_id) : ?array
+function getTeamMembers(int $team_id, int $team_leader_id) : ?array
 {
    global $connection;
    
@@ -109,10 +112,10 @@ function getTeamMembers($team_id, $team_leader_id) : ?array
 /**
  * Get the Id of a team's team leader
  *
- * @param  mixed $team_id
+ * @param  int $team_id
  * @return int
  */
-function getTeamLeaderId($team_id) : ?int
+function getTeamLeaderId(int $team_id) : ?int
 {
    global $connection;
    
@@ -129,7 +132,13 @@ function getTeamLeaderId($team_id) : ?int
 }
 
 
-function getTeamLeaderDetails($id) : ?array
+/**
+ * Get the details of a team's team leader
+ *
+ * @param  int $id
+ * @return array
+ */
+function getTeamLeaderDetails(int $id) : ?array
 {
    global $connection;
    
@@ -144,7 +153,13 @@ function getTeamLeaderDetails($id) : ?array
 }
 
 
-function getAllTask($limit = 0) : ?array
+/**
+ * Get all available tasks in descinding order
+ *
+ * @param  int $limit
+ * @return array
+ */
+function getAllTask(int $limit = 0) : ?array
 {
    global $connection;
    
@@ -158,5 +173,30 @@ function getAllTask($limit = 0) : ?array
    $data = $result->fetch_all(MYSQLI_ASSOC);
    
    return $data;
+}
+
+
+/**
+ * Update the profile a given user
+ *
+ * @param  string $picture_name
+ * @param  string $firstname
+ * @param  string $lastname
+ * @param  string $specialty
+ * @param  string $email
+ * @return bool
+ */
+function updateUserProfile(string $picture_name, string $firstname, 
+string $lastname, string $specialty, string $email) : ?bool
+{
+   global $connection;
+   
+   $query = "UPDATE `users` set picture = ?, firstname = ?, 
+   lastname = ?, specialty = ? WHERE email = ?";
+   $stmt = $connection->prepare($query);
+   $stmt->bind_param("sssss", $picture_name, $firstname, $lastname, $specialty, $email);
+   $result = $stmt->execute();
+   
+   return $result;
 }
 

@@ -40,14 +40,12 @@ include("header.php");
 
                <span>
                   <span class="one">Team:</span>
-                  <span class="two"><?= ucfirst($user_details['name']) ?></span>
+                  <span class="two"><?= isset($user_details["leader_id"]) ? ucfirst($user_details['name']) : "No Team" ?></span>
                </span>
 
                <span>
                   <span class="one">Reg Date:</span>
-                  <span class="two"> <?= $user_details["created_at"] ?> </span>
-
-                  <!-- date("D, jS M, Y.", $user_details["created_at"])  -->
+                  <span class="two"> <?= date("l - jS M, Y.", toDateTime($user_details["created_at"])) ?> </span>
                </span>
 
                <a class="edit" href="profile-edit.php"><i class="fas fa-edit"></i> Edit</a>
@@ -60,6 +58,14 @@ include("header.php");
    
    <script src="../../assets/js/dashboard.js"></script>
    <script src="../../assets/libraries/jquery.js"></script>
+   <script src="../../assets/libraries/toastr.min.js"></script>
+
+   <?php
+      if(isset($_SESSION["updateSuccess"]) && ($_SESSION["updateSuccess"] == "Yes")){
+         echo "<script> toastr.success('Profile updated successfully.', 'Update Successful', {timeOut: 5000}) </script>";
+         $_SESSION["updateSuccess"] = "No";
+      }
+   ?>
 </div>
 
 </body>

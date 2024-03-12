@@ -60,8 +60,8 @@ include("header.php");
                <?php endforeach; ?>
 
                <?php if($user_details['disqualify']): ?>
-               <div class="removed"> 
-                  <p>Disqualified</p> 
+               <div class="removed">
+                  <p>Disqualified</p>
                </div>
                <?php endif; ?>      
             </section>

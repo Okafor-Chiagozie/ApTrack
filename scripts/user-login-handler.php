@@ -1,9 +1,9 @@
 <?php
 
+session_start();
 require("config.php");
 include("functions.php");
 include("database-functions.php");
-session_start();
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user_login'])) {

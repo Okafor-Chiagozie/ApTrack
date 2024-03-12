@@ -48,21 +48,39 @@ function passwordLock($password) :string
 }
 
 
-function userFormEdit($picture, $first, $last, $specialty)
+/**
+ * Convert MYSQL dateTime to PHP dateTime
+ *
+ * @param  string $dateTime
+ * @return string
+ */
+function toDateTime(string $dateTime): string
 {
-   global $connection;
+   $dateTime = explode(" ", $dateTime);
+   $date = explode("-", $dateTime[0]);
+   $time = explode(":", $dateTime[1]);
 
-   $sql = "INSERT INTO user_login(Picture, Firstname, Lastname, Specialty)
-    VALUES('$picture', '$first', '$last', '$specialty')";
+   $result = mktime($time[0], $time[1], $time[2], $date[1], $date[2], $date[0]);
 
-   $sqlInsert = mysqli_query($connection, $sql);
-
-   if ($sqlInsert) {
-      redirect("profile.php");
-   }
-
-   mysqli_close($connection);
+   return $result;
 }
+
+
+/**
+ * Verify the file type is an image format
+ *
+ * @param  string $file_type
+ * @return bool
+ */
+function imageTypeVerifier(string $file_type) :bool
+{
+   $allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/jfif", "image/webp"];
+   
+   return in_array($file_type, $allowedTypes);
+}
+
+
+
 
 
 // Admin Login
@@ -186,7 +204,6 @@ function month($num)
  * @param  mixed $dateTwo
  * @return string
  */
-//Ctrl + shift + i => for DocComment
 function duration($dateOne, $dateTwo): string
 {
    $firstDate = explode("-", $dateOne);

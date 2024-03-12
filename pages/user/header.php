@@ -23,7 +23,7 @@
             echo " <link rel='stylesheet' href='../../assets/css/user/dashboard.css'> ";
          } else if ($_SESSION["userMenu"] == "profile") {
             echo " <link rel='stylesheet' href='../../assets/css/user/profile.css'> ";
-         } else if ($_SESSION["userMenu"] == "profile_edit") {
+         } else if ($_SESSION["userMenu"] == "profile-edit") {
             echo " <link rel='stylesheet' href='../../assets/css/user/profile-edit.css'> ";
          } else if ($_SESSION["userMenu"] == "task") {
             echo " <link rel='stylesheet' href='../../assets/css/user/task-page.css'> ";
@@ -92,7 +92,7 @@
                   <i class="fa fa-cubes"></i> Dashboard</a>
                </span>
 
-               <span class="<?php if($_SESSION['userMenu'] == 'profile'): ?> inside <?php endif; ?>"> 
+               <span class="<?php if($_SESSION['userMenu'] == 'profile' || $_SESSION['userMenu'] == 'profile-edit'): ?> inside <?php endif; ?>"> 
                   <a href="profile.php">
                   <i class="fa fa-user"></i> Profile</a>
                </span>
@@ -107,15 +107,19 @@
                   <i class="fas fa-bell"></i> Notifications <span class="dot">.</span></a>
                </span>
 
+               <?php if(isset($user_details["leader_id"]) && $user_details["winner"]): ?>
                <span class="<?php if($_SESSION['userMenu'] == 'winner'): ?> inside <?php endif; ?>"> 
                   <a href="winner-page.php">
                   <i class="fa-solid fa-award"></i> Winners</a>
                </span>
+               <?php endif; ?>
 
+               <?php if(isset($user_details["leader_id"]) && $user_details["team_id"] == $user_details["leader_id"]): ?>
                <span class="<?php if($_SESSION['userMenu'] == 'leader_page'): ?> inside <?php endif; ?>"> 
                   <a href="team-leader-team-page.php">
                   <i class="fa-solid fa-users"></i> Team Page</a>
                </span>
+               <?php endif; ?>
             </section>
 
             <section class="otherSec">

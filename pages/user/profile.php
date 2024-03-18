@@ -6,7 +6,6 @@ include("../../scripts/functions.php");
 include("../../scripts/database-functions.php");
 
 $_SESSION["userMenu"] = "profile";
-$user_details = getUserDetails($_SESSION["userEmail"]);
 
 include("header.php");
 ?>

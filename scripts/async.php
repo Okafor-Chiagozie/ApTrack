@@ -1,6 +1,8 @@
 <?php
 
 require("config.php");
+require("functions.php");
+require("database-functions.php");
 
 
 if ($_REQUEST['action'] === 'accept') {

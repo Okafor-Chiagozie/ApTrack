@@ -3,6 +3,9 @@
    && ($_SESSION["status"] != "user" || $_SESSION["status"] != "leader")) 
    {
       header("Location: ../../sign-in.php");
+   }else{
+
+      $user_details = getUserDetails($_SESSION["userEmail"]);
    }
 ?>
 
@@ -59,7 +62,7 @@
             <section class="navSec">
                <section class="searchSec">
                   <h1>
-                     Welcome <?= ucwords($user_details["firstname"] . " " . $user_details["lastname"]); ?>
+                     Welcome <?= ucwords("{$user_details['firstname']} {$user_details['lastname']}") ?>
                   </h1>
 
                   <!-- <section>
@@ -87,9 +90,9 @@
 
          <section class="leftSection" id="leftSection">
             <section class="menuSec">
-               <span class="<?php if($_SESSION['userMenu'] == 'dashboard'): ?> inside <?php endif; ?>"> 
-                  <a href="dashboard.php">
-                  <i class="fa fa-cubes"></i> Dashboard</a>
+               <span class="<?php if($_SESSION['userMenu'] == 'dashboard'  || $_SESSION['userMenu'] == 'leader_dashboard'): ?> inside <?php endif; ?>"> 
+                  <a href="<?= (isset($user_details['leader_id']) && $_SESSION['userId'] == $user_details['leader_id']) ? 'team-leader-dashboard.php' : 'dashboard.php' ?>">
+                  <i class="fa fa-cubes"></i> Dashboard</a> 
                </span>
 
                <span class="<?php if($_SESSION['userMenu'] == 'profile' || $_SESSION['userMenu'] == 'profile-edit'): ?> inside <?php endif; ?>"> 
@@ -114,7 +117,7 @@
                </span>
                <?php endif; ?>
 
-               <?php if(isset($user_details["leader_id"]) && $user_details["team_id"] == $user_details["leader_id"]): ?>
+               <?php if(isset($user_details["leader_id"]) && $_SESSION["userId"] == $user_details["leader_id"]): ?>
                <span class="<?php if($_SESSION['userMenu'] == 'leader_page'): ?> inside <?php endif; ?>"> 
                   <a href="team-leader-team-page.php">
                   <i class="fa-solid fa-users"></i> Team Page</a>

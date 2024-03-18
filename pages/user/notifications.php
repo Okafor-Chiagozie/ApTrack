@@ -7,14 +7,7 @@ include("../../scripts/database-functions.php");
 
 $_SESSION["userMenu"] = "notifications";
 
-$user_details = getUserDetails($_SESSION["userEmail"]);
-?>
-
-
-<?php
-
 include("header.php");
-
 ?>
 
    <section class="mainSection inside" id="mainSection">
@@ -23,14 +16,20 @@ include("header.php");
             <h1>My Notifications</h1>
             <hr>
          </section>
+            <?php
+            $notifications = getUserNotifications($user_details["id"]);
+            if($notifications):
+               foreach ($notifications as $notification):
+            ?>
             <section class="container outside">
                <span>
-                  <span class="one">Team Name:</span>
+                  <span class="one">Team Name: <?php $notification["name"] ?></span>
                   <span></span>
                </span>
 
                <span>
-                  <span class="one">Team Leader:</span>
+                  <?php $team_leader = getTeamLeaderDetails($user_details["leader_id"]); ?>
+                  <span class="one">Team Leader: <?php ucwords("{$team['firstname']} {$team['lastname']}") ?></span>
                   <span></span>
                </span>
 
@@ -46,11 +45,14 @@ include("header.php");
                   <!-- decline($num>, '$notifyDetails['User_email']', '$notifyDetails['Id']') -->
                </section>
             </section>
+            <?php 
+               endforeach;
+            else: 
+            ?>
 
-         <!-- <p class="info"> <span>No notification available</span> </p> -->
+         <p class="info"> <span>No notification available</span> </p>
+         <?php endif; ?>
       </section>
-
-
 
       <p class="footer">All Rights Reserved @ApTrack <?= date("Y") ?></p>
    </section>

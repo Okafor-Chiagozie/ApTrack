@@ -8,75 +8,10 @@ include("../../scripts/database-functions.php");
 
 $_SESSION["userMenu"] = "leader_page";
 
-$user_details = getUserDetails($_SESSION["userEmail"]);
-
-
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-
-    $documentName = "";
-
-   if (isset($_POST["upload"])) {
-
-      if ($_FILES["teamDocument"]["size"] == 0) {
-         $_SESSION["documentUploadFalse"] = "Yes";
-      } else {
-         $teamDocumentFile = $_FILES["teamDocument"];
-         $allowedTypes = ["application/x-zip-compressed", "application/octet-stream"];
-
-         // Check for file type
-         if (!in_array($teamDocumentFile["type"], $allowedTypes)) {
-            $_SESSION["fileSupport"] = "Yes";
-         } else {
-            $documentName = explode(".", $teamDocumentFile["name"])[0];
-            $ext = explode(".", $teamDocumentFile["name"])[1];
-
-            $documentName .= time();
-            $documentName .= "." . $ext;
-
-            $fileDestination = "../../../uploads/team-document/";
-            $tmpFile = $teamDocumentFile['tmp_name'];
-
-            $sqlDocument = "SELECT Document FROM teams WHERE Team_name = '{$user_details['Team_name']}' ";
-            $sqlInsertDocument = mysqli_query($db_connection, $sqlDocument);
-            $documentCheck = mysqli_fetch_assoc($sqlInsertDocument);
-
-            // The function to upload the file to the destination
-            if ($documentCheck["Document"] != " ") {
-
-               if (file_exists($fileDestination . $documentCheck["Document"])) {
-
-                  unlink($fileDestination . $documentCheck["Document"]);
-                  move_uploaded_file($tmpFile, $fileDestination . $documentName);
-               } else {
-                  move_uploaded_file($tmpFile, $fileDestination . $documentName);
-               }
-            }
-         }
-      }
-   }
-
-
-
-   if (!empty($documentName)) {
-
-      $sql = "UPDATE teams set Document = '$documentName' WHERE Team_name = '{$user_details['Team_name']}'";
-
-      $sqlInsert = mysqli_query($db_connection, $sql);
-
-      if ($sqlInsert) {
-         $_SESSION["documentUpload"] = "Yes";
-      }
-   }
+include("header.php");
+if($_SESSION["status"] !== "leader"){
+   redirect("dashboard.php");
 }
-
-?>
-
-
-<?php
-   include("header.php");
-   if($_SESSION["status"] !== "leader"){
-      header("Location: dashboard.php");
-   }
 ?>
 
    <section class="mainSection inside" id="mainSection">
@@ -86,47 +21,52 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <hr>
          </section>
 
-         <!-- Team Members section -->
-         <section class="container" id="alphaCon">
-            
-            <!-- <p class="info"> <span>No Team Leader</span> </p> -->
-
-            <section class="teamBox outside">
+         <?php if($user_details["team_id"]): ?>
+         <section class="container">
+            <?php $team_leader = getTeamLeaderDetails($user_details["leader_id"]); ?>
+            <section class="teamBox outside" title="Team Leader">
                <section class="imgSec inside">
-                  <img src="../../uploads/user-pictures/user.jfif" alt="Profile picture" class="outside">
+                  <img src="../../uploads/user-pictures/<?= $team_leader['picture'] ?>" alt="Profile picture" class="outside">
                </section>
 
                <span class="infoSec">
-                  <h1>Chiagozie Okafor</h1>
-                  <span>Backend Developer</span>
+                  <h1><?= ucwords("{$team_leader['firstname']} {$team_leader['lastname']}") ?></h1>
+                  <span><?= $team_leader['specialty'] ?></span>
                </span>
 
-               <p><i class="fa-solid fa-star"></i></p>
-            </section> 
+               <span class="teamName"><?= ucfirst($user_details['name']) ?></span>
 
-            <!-- Team Info -->
+               <p><i class="fa-solid fa-star"></i></p>
+            </section>
+
+            <?php $team_members = getTeamMembers($user_details['team_id'], getTeamLeaderId($user_details['team_id'])); ?>
             <section class="teamBox outside">
-               <span class="totalMembers"> 3 Member(s) <i class="fa fa-users"></i></span>
+               <span class="totalMembers"><?= count($team_members) + 1 ?> &nbsp;Member(s)&nbsp; <i class="fa fa-users"></i> </span>
             </section>
 
             <hr>
-
-            <!-- <p class="info"> <span>No Team Members</span> </p> -->
             
+            <?php foreach ($team_members as $team_member):?>
             <section class="teamBox outside">
                <section class="imgSec inside">
-                  <img src="../../uploads/user-pictures/user.jfif" alt="Profile picture" class="outside">
+                  <img src="../../uploads/user-pictures/<?= $team_member['picture'] ?>" alt="Profile picture" class="outside">
                </section>
 
                <span class="infoSec">
-                  <h1>Chiagozie okafor</h1>
+                  <h1><?= ucwords("{$team_member['firstname']} {$team_member['lastname']}") ?></h1>
                   <span>Backend Developer</span>
                </span>
-            </section>                                                      
-         </section>              
+
+               <span class="teamName"><?= ucfirst($user_details['name']) ?></span>
+            </section>
+            <?php endforeach; ?>    
+         </section>
+         <?php else: ?>
+         <p class="info"> <span>Not in any Team</span> </p>
+         <?php endif; ?>              
       </section>
 
-      <!-- Second Partttttttttttt -->
+      <!-- Projetc Submission -->
       <section class="secondSec">
          <section class="Heading">
             <h1>Project Submission</h1>
@@ -134,23 +74,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
          </section>
          
          <section class="container">
-            
-            <form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data" class="myForm">
+            <form action="../../scripts/upload-team-document-handler.php" method="post" enctype="multipart/form-data" class="myForm">
                <section class="projectUpload">
-                     <label for="teamDocument">Project Upload</label>
-                     <input type="file" id="file" name="teamDocument" size="10" class="inside">
+                     <label for="document">Project Upload</label>
+                     <input type="file" id="file" name="document" size="10" class="inside">
                </section>
 
                <input type="submit" name="upload" value="&#8593; Upload">
             </form>
-         </section>  
+         </section>
       </section>
 
-      <p class="footer">All Rights Reserved @ApTrack <?= date("Y") ?></p>
+      <?php if($user_details["team_id"] && $user_details['disqualify']): ?>
+      <div class="removed">
+         <p>Disqualified</p>
+      </div>
+      <?php endif; ?>  
 
-      <!-- <div class="removed"> 
-            <p>Disqualified</p> 
-      </div> -->
+      <p class="footer">All Rights Reserved @ApTrack <?= date("Y") ?></p>
    </section>
    
    <script src="../../assets/js/dashboard.js"></script>
@@ -163,45 +104,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $_SESSION["fileSupport"] = "No";
       }
 
-      if(isset($_SESSION["documentUpload"]) && ($_SESSION["documentUpload"] == "Yes")){
+      if(isset($_SESSION["uploadSuccess"]) && ($_SESSION["uploadSuccess"] == "Yes")){
             echo "<script> toastr.success('Team project upload was successful.', 'Upload Successful', {timeOut: 5000}) </script>";
-            $_SESSION["documentUpload"] = "No";
+            $_SESSION["uploadSuccess"] = "No";
+      }
+      
+      if(isset($_SESSION["uploadFailed"]) && ($_SESSION["uploadFailed"] == "Yes")){
+            echo "<script> toastr.error('Team project upload was unsuccessful.', 'Upload Unsuccessful', {timeOut: 5000}) </script>";
+            $_SESSION["uploadFailed"] = "No";
       }
    ?>
 </div>
                 
-<script>
-   var navLine = document.getElementById("navLine")
-   var con1 = document.getElementById("con1")
-   var con2 = document.getElementById("con2")
-   
-
-   function navHandle(num){
-      if (num == 1){
-            navLine.style.left = "0%"
-            con1.style.display = "flex"
-            con2.style.display = "none"
-
-      }else if(num == 2){
-            navLine.style.left = "50%"
-            con1.style.display = "none"
-            con2.style.display = "flex"
-      }
-   }
-
-
-   async function teamMemberRequest(num, leaderTeam, leaderName, userEmail){
-
-      var requestButton = document.getElementsByClassName("requestButton")
-      requestButton[num].firstElementChild.onclick = ""
-      requestButton[num].firstElementChild.textContent = "Request Sent ✓"
-      requestButton[num].firstElementChild.style.backgroundColor = "silver"
-      requestButton[num].firstElementChild.style.border = "1px solid silver"
-      requestButton[num].firstElementChild.style.color = "grey"
-
-      var result = await fetch(`asynchro.php?action=teamMemberRequest&leaderTeam=${leaderTeam}&leaderName=${leaderName}&userEmail=${userEmail}`);
-   }
-</script>
-
 </body>
 </html>

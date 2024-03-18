@@ -80,6 +80,20 @@ function imageTypeVerifier(string $file_type) :bool
 }
 
 
+/**
+ * Verify the file type is a zipped file format
+ *
+ * @param  string $file_type
+ * @return bool
+ */
+function zipFileVerifier(string $file_type) :bool
+{
+   $allowedTypes = ["application/x-zip-compressed", "application/octet-stream"];
+   
+   return in_array($file_type, $allowedTypes);
+}
+
+
 
 
 

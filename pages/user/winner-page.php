@@ -7,14 +7,7 @@ include("../../scripts/database-functions.php");
 
 $_SESSION["userMenu"] = "winner";
 
-$user_details = getUserDetails($_SESSION["userEmail"]);
-?>
-
-
-<?php
-
 include("header.php");
-
 ?>
 
    <section class="mainSection inside" id="mainSection">

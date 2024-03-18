@@ -6,7 +6,6 @@ include("../../scripts/functions.php");
 include("../../scripts/database-functions.php");
 
 $_SESSION["userMenu"] = "profile-edit";
-$user_details = getUserDetails($_SESSION["userEmail"]);
 
 include("header.php");
 ?>
@@ -39,6 +38,7 @@ include("header.php");
                <section>
                      <label for="specialty">Area of Specialization</label>
                      <select name="specialty" id="specialty" class="inside">
+                        <option value="Not Specified" hidden>Not Specified</option>
                         <option <?php if($user_details["specialty"] == "UI/UX Designer"): ?> selected <?php endif; ?> value="UI/UX Designer">UI/UX Designer</option>
                         <option <?php if($user_details["specialty"] == "Frontend Developer"): ?> selected <?php endif; ?> value="Frontend Developer">Frontend Developer</option>
                         <option <?php if($user_details["specialty"] == "Backend Developer"): ?> selected <?php endif; ?> value="Backend Developer">Backend Developer</option>

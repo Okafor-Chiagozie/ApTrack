@@ -8,19 +8,10 @@ include("../../scripts/database-functions.php");
 
 $_SESSION["userMenu"] = "leader_dashboard";
 
-$user_details = getUserDetails($_SESSION["userEmail"]);
-
-?>
-
-
-<?php
-
 include("header.php");
-
 if($_SESSION["status"] !== "leader"){
-    header("Location: dashboard.php");
+   redirect("dashboard.php");
 }
-
 ?>
 
    <section class="mainSection inside" id="mainSection">
@@ -36,16 +27,23 @@ if($_SESSION["status"] !== "leader"){
             <hr id="navLine">
          </nav>
 
-         <!-- All users section -->
+         <!-- All Users Section -->
          <section class="container" id="con1">
-            <section class="teamBox outside" title="Team Leader">
+            <?php 
+            $num = 0;
+            $all_users = getAllUsers(); 
+            if($all_users):
+               foreach ($all_users as $user):
+                  $num++;
+            ?>
+            <section class="teamBox outside">
                <section class="imgSec inside">
-                  <img src="../../uploads/user-pictures/user.jfif" alt="Profile picture" class="outside">
+                  <img src="../../uploads/user-pictures/<?= $user['picture'] ?>" alt="Profile picture" class="outside">
                </section>
 
                <span class="infoSec">
-                  <h1>Chiagozie Okafor</h1>
-                  <span>Backend Dveloper</span>
+                  <h1><?= ucwords("{$user['firstname']} {$user['lastname']} $num") ?></h1>
+                  <span><?= $user["specialty"] ?></span>
                </span>
 
                <!-- <span class="noButton">
@@ -56,19 +54,27 @@ if($_SESSION["status"] !== "leader"){
                   <span>Request Sent &#10003;</span>
                </span> -->
 
-               <span class="teamButton requestButton">
+               <span class="<?= ($user['team_id']) ? 'noButton' : 'teamButton requestButton' ?>">
                   <span onclick="teamMemberRequest()">Send Request</span>
                   <!-- $num , $user_details['Team_name'] , 'ucwords($user_details['Firstname'].' '.$user_details['Lastname']), $allUsers['Email']  -->
                </span>
-               
-               <!-- <p><i class="fa-solid fa-star"></i></p> -->
             </section>
-
-            <!-- <div class="removed"> 
-               <p>Disqualified</p> 
-            </div> -->
+            <?php 
+               endforeach;
+               if($user_details['disqualify']):
+            ?>
+            <div class="removed">
+               <p>Disqualified</p>
+            </div>
+            <?php 
+               endif; 
+            else:
+            ?>
+            <p class="info"> <span>No User Available</span> </p>
+            <?php endif; ?>
          </section>
 
+         <!-- Team Leaders Section -->
          <section class="container" id="con2">
             <section class="teamBox outside">
                <section class="imgSec inside">
@@ -120,35 +126,41 @@ if($_SESSION["status"] !== "leader"){
 </div>
             
 <script>
-   var navLine = document.getElementById("navLine")
-   var con1 = document.getElementById("con1")
-   var con2 = document.getElementById("con2")
+   var navLine = document.getElementById("navLine");
+   var con1 = document.getElementById("con1");
+   var con2 = document.getElementById("con2");
    
 
    function navHandle(num){
       if (num == 1){
-            navLine.style.left = "0%"
-            con1.style.display = "flex"
-            con2.style.display = "none"
+            navLine.style.left = "0%";
+            con1.style.display = "flex";
+            con2.style.display = "none";
 
       }else if(num == 2){
-            navLine.style.left = "50%"
-            con1.style.display = "none"
-            con2.style.display = "flex"
+            navLine.style.left = "50%";
+            con1.style.display = "none";
+            con2.style.display = "flex";
       }
    }
 
 
-   async function teamMemberRequest(num, leaderTeam, leaderName, userEmail){
+   async function teamMemberRequest(leaderId, userEmail){
 
-      var result = await fetch(`../../scripts/async.php?action=teamMemberRequest&leaderTeam=${leaderTeam}&leaderName=${leaderName}&userEmail=${userEmail}`);
+      var result = await fetch(`../../scripts/async.php?action=teamMemberRequest&leaderId=${leaderId}&userEmail=${userEmail}`);
 
-      var requestButton = document.getElementsByClassName("requestButton")
-      requestButton[num].firstElementChild.onclick = ""
-      requestButton[num].firstElementChild.textContent = "Request Sent ✓"
-      requestButton[num].firstElementChild.style.backgroundColor = "silver"
-      requestButton[num].firstElementChild.style.border = "1px solid silver"
-      requestButton[num].firstElementChild.style.color = "grey"
+      var requestButtons = document.getElementsByClassName("requestButton");
+
+      for (const requestButton of requestButtons) {
+         requestButton.addEventListener('click', () => {
+            requestButton.style.display = "none";
+         });
+      }
+      requestButton[num].firstElementChild.onclick = "";
+      requestButton[num].firstElementChild.textContent = "Request Sent ✓";
+      requestButton[num].firstElementChild.style.backgroundColor = "silver";
+      requestButton[num].firstElementChild.style.border = "1px solid silver";
+      requestButton[num].firstElementChild.style.color = "grey";
    }
 </script>
 

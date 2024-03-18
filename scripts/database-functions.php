@@ -67,6 +67,7 @@ function getUserDetails(string $email) : ?array
 
    if ($result->num_rows > 0) {
       $data_1 = $result->fetch_assoc();
+      $_SESSION["userId"] = $data_1["id"];
    }
 
    if($data_1["team_id"]){
@@ -85,6 +86,8 @@ function getUserDetails(string $email) : ?array
 
    return $data_1;
 }
+
+
 
 
 /**
@@ -191,12 +194,70 @@ string $lastname, string $specialty, string $email) : ?bool
 {
    global $connection;
    
-   $query = "UPDATE `users` set picture = ?, firstname = ?, 
-   lastname = ?, specialty = ? WHERE email = ?";
+   $query = "UPDATE `users` set `picture` = ?, `firstname` = ?, 
+   `lastname` = ?, `specialty` = ? WHERE `email` = ?";
    $stmt = $connection->prepare($query);
    $stmt->bind_param("sssss", $picture_name, $firstname, $lastname, $specialty, $email);
    $result = $stmt->execute();
    
    return $result;
+}
+
+
+/**
+ * Upload the team's document
+ *
+ * @param  string $document_name
+ * @param  int $id
+ * @return bool
+ */
+function uploadTeamDocument(string $document_name, int $id) : ?bool
+{
+   global $connection;
+   
+   $query = "UPDATE `teams` set `document` = ? WHERE `id` = ?";
+   $stmt = $connection->prepare($query);
+   $stmt->bind_param("si", $document_name, $id);
+   $result = $stmt->execute();
+   
+   return $result;
+}
+
+
+/**
+ * Get all notifications for a given user
+ *
+ * @param  int $id
+ * @return array
+ */
+function getUserNotifications(int $id) : ?array
+{
+   global $connection;
+   
+   $query = "SELECT `notifications`.*, `users`.*, `teams`.* FROM `notifications` 
+   JOIN `users` ON `notifications`.`user_id` = `users`.`id`
+   JOIN `teams` ON `notifications`.`team_id` = `teams`.`id`
+   WHERE `user_id` = ? ORDER BY `notifications`.`id` DESC";
+   $stmt = $connection->prepare($query);
+   $stmt->bind_param("i", $id);
+   $stmt->execute();
+   $result = $stmt->get_result();
+   $data = $result->fetch_all(MYSQLI_ASSOC);
+   
+   return $data;
+}
+
+
+function getAllUsers() : ?array
+{
+   global $connection;
+   
+   $query = "SELECT * FROM `users` WHERE `id`"; // NOT IN ($team_leaders_id)
+   $stmt = $connection->prepare($query);
+   $stmt->execute();
+   $result = $stmt->get_result();
+   $data = $result->fetch_all(MYSQLI_ASSOC);
+   
+   return $data;
 }
 

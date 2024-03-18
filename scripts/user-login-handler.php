@@ -31,8 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user_login'])) {
 
    $user_details = getUserDetails($email);
 
-   if ($user_details["team_id"] 
-   && $user_details["team_id"] == $user_details['leader_id']) {
+   if ($user_details["team_id"]
+   && $_SESSION["userId"] == $user_details['leader_id']) {
          
       // For knowing if the user went through the sign in
       $_SESSION["userEmail"] = $email;

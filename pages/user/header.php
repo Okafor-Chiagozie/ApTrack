@@ -78,7 +78,7 @@
 
                   <a href="notifications.php" class="icon outside" title="Notifications">
                      <i class="fas fa-bell"></i> 
-                     <span>.</span> 
+                     <?php if(getUserNotifications($user_details['email'])): ?> <span>.</span> <?php endif; ?>
                   </a>
 
                   <a href="profile.php" class="profilePic outside">
@@ -107,7 +107,9 @@
 
                <span class="<?php if($_SESSION['userMenu'] == 'notifications'): ?> inside <?php endif; ?>"> 
                   <a href="notifications.php">
-                  <i class="fas fa-bell"></i> Notifications <span class="dot">.</span></a>
+                     <i class="fas fa-bell"></i> Notifications 
+                     <?php if(getUserNotifications($user_details['email'])): ?> <span class="dot">.</span> <?php endif ?>
+                  </a>
                </span>
 
                <?php if(isset($user_details["leader_id"]) && $user_details["winner"]): ?>

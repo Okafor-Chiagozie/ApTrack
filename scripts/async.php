@@ -5,6 +5,26 @@ require("functions.php");
 require("database-functions.php");
 
 
+if ($_REQUEST['action'] === 'teamMemberRequest') {
+
+   $user_id = $_REQUEST["userId"];
+   $team_id = $_REQUEST["teamId"];
+
+   if(userTeamRequest($user_id, $team_id)){
+      echo "Done";
+   }
+}
+
+
+
+
+
+
+
+
+
+
+
 if ($_REQUEST['action'] === 'accept') {
 
    $email = $_REQUEST["email"];
@@ -81,19 +101,6 @@ if ($_REQUEST['action'] === 'pardonTeam') {
 
    $sql7 = "UPDATE teams set Disqualify = '0' WHERE Team_name = '$team_name'";
    $sqlInsert7 = mysqli_query($connection, $sql7);
-
-   mysqli_close($connection);
-}
-
-
-if ($_REQUEST['action'] === 'teamMemberRequest') {
-
-   $leaderTeam = $_REQUEST["leaderTeam"];
-   $leaderName = $_REQUEST["leaderName"];
-   $userEmail = $_REQUEST["userEmail"];
-
-   $sql8 = "INSERT INTO notify(Team_name,Team_leader,User_email)VALUES('$leaderTeam','$leaderName','$userEmail')";
-   $sqlInsert8 = mysqli_query($connection, $sql8);
 
    mysqli_close($connection);
 }

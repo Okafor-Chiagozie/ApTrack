@@ -41,7 +41,7 @@ if($_SESSION["status"] !== "user"){
 
             <?php $team_members = getTeamMembers($user_details['team_id'], getTeamLeaderId($user_details['team_id'])); ?>
             <section class="teamIcon outside">
-               <span><?= count($team_members) + 1 ?> &nbsp;Members&nbsp; <i class="fa fa-users"></i> </span>
+               <span><?= count($team_members) + 1 ?> &nbsp;Member(s)&nbsp; <i class="fa fa-users"></i> </span>
             </section>
 
             <hr>
@@ -54,7 +54,7 @@ if($_SESSION["status"] !== "user"){
 
                <span class="infoSec">
                   <h1><?= ucwords("{$team_member['firstname']} {$team_member['lastname']}") ?></h1>
-                  <span>Backend Developer</span>
+                  <span><?= $team_member["specialty"] ?></span>
                </span>
 
                <span class="teamName"><?= ucfirst($user_details['name']) ?></span>
@@ -83,7 +83,6 @@ if($_SESSION["status"] !== "user"){
          if($tasks):
             foreach ($tasks as $task):
          ?>
-         
          <section class="container outside">
             <h1>Project description</h1>
 

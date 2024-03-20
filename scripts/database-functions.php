@@ -88,6 +88,27 @@ function getUserDetails(string $email) : ?array
 }
 
 
+/**
+ * Get the Id of a user
+ *
+ * @param  string $user_email
+ * @return int
+ */
+function getUserId(string $user_email) : ?int
+{
+   global $connection;
+   
+   $query = "SELECT `id` FROM `users` WHERE `email` = ?";
+   $stmt = $connection->prepare($query);
+   $stmt->bind_param("s", $user_email);
+   $stmt->execute();
+   $stmt->bind_result($user_id);
+
+   if($stmt->fetch())
+      return $user_id;
+
+   return null;
+}
 
 
 /**
@@ -205,6 +226,143 @@ string $lastname, string $specialty, string $email) : ?bool
 
 
 /**
+ * Get all notifications for a given user
+ *
+ * @param  string $user_email
+ * @return array
+ */
+function getUserNotifications(string $user_email) : ?array
+{
+   global $connection;
+
+   $user_id = getUserId($user_email);
+   
+   $query = "SELECT `notifications`.*, `users`.*, `teams`.* FROM `notifications` 
+   JOIN `users` ON `notifications`.`user_id` = `users`.`id`
+   JOIN `teams` ON `notifications`.`team_id` = `teams`.`id`
+   WHERE `user_id` = ? ORDER BY `notifications`.`id` DESC";
+   $stmt = $connection->prepare($query);
+   $stmt->bind_param("i", $user_id);
+   $stmt->execute();
+   $result = $stmt->get_result();
+   $data = $result->fetch_all(MYSQLI_ASSOC);
+   
+   return $data;
+}
+
+
+/**
+ * Get all notifications for a user for a given team
+ *
+ * @param  string $user_email
+ * @param  int $team_id
+ * @return array
+ */
+function getTeamUserNotification(string $user_email, int $team_id) : ?array
+{
+   global $connection;
+
+   $user_id = getUserId($user_email);
+   
+   $query = "SELECT `notifications`.*, `users`.*, `teams`.* FROM `notifications` 
+   JOIN `users` ON `notifications`.`user_id` = `users`.`id`
+   JOIN `teams` ON `notifications`.`team_id` = `teams`.`id`
+   WHERE `notifications`.`user_id` = ? AND `notifications`.`team_id` = ? ORDER BY `notifications`.`id` DESC";
+   $stmt = $connection->prepare($query);
+   $stmt->bind_param("ii", $user_id, $team_id);
+   $stmt->execute();
+   $result = $stmt->get_result();
+   $data = $result->fetch_all(MYSQLI_ASSOC);
+   
+   return $data;
+}
+
+
+/**
+ * Get all team leader's Id
+ *
+ * @return array
+ */
+function getAllTeamLeadersId() :?array
+{
+   global $connection;
+   
+   $query = "SELECT `leader_id` FROM `teams`";  // WHERE `id` NOT IN ($team_leaders_id)
+   $stmt = $connection->prepare($query);
+   $stmt->execute();
+   $result = $stmt->get_result();
+   $data = $result->fetch_all(MYSQLI_ASSOC);
+   
+   return $data;
+}
+
+
+/**
+ * Return the details of all the team leaders
+ *
+ * @return array
+ */
+function getAllTeamLeaders() : ?array
+{
+   global $connection;
+   
+   $team_leaders_id = getAllTeamLeadersId();
+   $team_leaders_id = implode(", ", array_filter(array_column($team_leaders_id, 'leader_id')));
+
+   $query = "SELECT `users`.*, `teams`.* FROM `users` 
+   JOIN `teams` ON `users`.`team_id` = `teams`.`id` WHERE `users`.`id` IN ($team_leaders_id)";
+   $stmt = $connection->prepare($query);
+   $stmt->execute();
+   $result = $stmt->get_result();
+   $data = $result->fetch_all(MYSQLI_ASSOC);
+   
+   return $data;
+}
+
+
+/**
+ * Return the details of all the users
+ *
+ * @return array
+ */
+function getAllUsers() : ?array
+{
+   global $connection;
+   
+   $team_leaders_id = getAllTeamLeadersId();
+   $team_leaders_id = implode(", ", array_filter(array_column($team_leaders_id, 'leader_id')));
+
+   $query = "SELECT * FROM `users` WHERE `id` NOT IN ($team_leaders_id)";
+   $stmt = $connection->prepare($query);
+   $stmt->execute();
+   $result = $stmt->get_result();
+   $data = $result->fetch_all(MYSQLI_ASSOC);
+   
+   return $data;
+}
+
+
+/**
+ * Send an team invitation request to a user
+ *
+ * @param  int $user_id
+ * @param  int $team_id
+ * @return bool
+ */
+function userTeamRequest(int $user_id, int $team_id) : ?bool
+{
+   global $connection;
+
+   $query = "INSERT INTO `notifications` (`user_id`, `team_id`) VALUES (?, ?)";
+   $stmt = $connection->prepare($query);
+   $stmt->bind_param("ii", $user_id, $team_id);
+   $result = $stmt->execute();
+
+   return $result;
+}
+
+
+/**
  * Upload the team's document
  *
  * @param  string $document_name
@@ -221,43 +379,5 @@ function uploadTeamDocument(string $document_name, int $id) : ?bool
    $result = $stmt->execute();
    
    return $result;
-}
-
-
-/**
- * Get all notifications for a given user
- *
- * @param  int $id
- * @return array
- */
-function getUserNotifications(int $id) : ?array
-{
-   global $connection;
-   
-   $query = "SELECT `notifications`.*, `users`.*, `teams`.* FROM `notifications` 
-   JOIN `users` ON `notifications`.`user_id` = `users`.`id`
-   JOIN `teams` ON `notifications`.`team_id` = `teams`.`id`
-   WHERE `user_id` = ? ORDER BY `notifications`.`id` DESC";
-   $stmt = $connection->prepare($query);
-   $stmt->bind_param("i", $id);
-   $stmt->execute();
-   $result = $stmt->get_result();
-   $data = $result->fetch_all(MYSQLI_ASSOC);
-   
-   return $data;
-}
-
-
-function getAllUsers() : ?array
-{
-   global $connection;
-   
-   $query = "SELECT * FROM `users` WHERE `id`"; // NOT IN ($team_leaders_id)
-   $stmt = $connection->prepare($query);
-   $stmt->execute();
-   $result = $stmt->get_result();
-   $data = $result->fetch_all(MYSQLI_ASSOC);
-   
-   return $data;
 }
 

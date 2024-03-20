@@ -17,28 +17,28 @@ include("header.php");
             <hr>
          </section>
             <?php
-            $notifications = getUserNotifications($user_details["id"]);
+            $notifications = getUserNotifications($user_details["email"]);
             if($notifications):
                foreach ($notifications as $notification):
             ?>
             <section class="container outside">
                <span>
-                  <span class="one">Team Name: <?php $notification["name"] ?></span>
-                  <span></span>
+                  <span class="one">Team Name:</span>
+                  <span><?= ucfirst($notification["name"]) ?></span>
                </span>
 
                <span>
-                  <?php $team_leader = getTeamLeaderDetails($user_details["leader_id"]); ?>
-                  <span class="one">Team Leader: <?php ucwords("{$team['firstname']} {$team['lastname']}") ?></span>
-                  <span></span>
+                  <?php $team_leader = getTeamLeaderDetails($notification['leader_id']); ?>
+                  <span class="one">Team Leader:</span>
+                  <span><?= ucwords("{$team_leader['firstname']} {$team_leader['lastname']}") ?></span>
                </span>
 
                <span>
-                  <span>Sent you a membership request 😎</span>
+                  <span>Sent you a team membership request 😎</span>
                </span>
 
                <section>
-                  <span class="accept" onclick="">Accept</span>
+                  <span class="accept" onclick="accept()">Accept</span>
                   <!-- accept( $num , '$notifyDetails['User_email']', '$notifyDetails['Id']', '$notifyDetails['Team_name']') -->
 
                   <span class="decline" onclick="">Decline</span>

@@ -165,8 +165,8 @@ if($_SESSION["status"] !== "leader"){
 
    async function teamMemberRequest(num, user_id, team_id){
       
-      var result = await fetch(`../../scripts/async.php?action=teamMemberRequest&userId=${user_id}&teamId=${team_id}`);
-      var response = await result.text();
+      var request = await fetch(`../../scripts/async.php?action=teamMemberRequest&userId=${user_id}&teamId=${team_id}`);
+      var response = await request.text();
 
       if(response == "Done"){
          var requestButtons = document.getElementsByClassName("requestButton");

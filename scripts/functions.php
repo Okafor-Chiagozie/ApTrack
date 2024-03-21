@@ -112,7 +112,7 @@ function adminLogin($email, $password, $table)
       if ($row["Password"] == $password) {
          // For Remember me
          if (isset($_POST["adminRemember"])) {
-            $_SESSION["adminRemember"] = "Yes";
+            $_SESSION["adminRemember"] = true;
          }
 
          // For knowing if the user went through the sign up
@@ -122,38 +122,12 @@ function adminLogin($email, $password, $table)
          // Going to the dashboard
          redirect("../pages/admin/dashboard.php");
       } else {
-         $_SESSION["adminWrongInfo"] = "Yes";
+         $_SESSION["adminWrongInfo"] = true;
          redirect("../sign-in.php");
       }
    } else {
-      $_SESSION["adminWrongInfo"] = "Yes";
+      $_SESSION["adminWrongInfo"] = true;
       redirect("../sign-in.php");
-   }
-}
-
-
-// Email Verifier
-function emailVerifier($emailCheck, $table)
-{
-   global $connection;
-
-   $sql = "SELECT Firstname FROM " . $table . " WHERE Email = '$emailCheck'";
-   $sqlInsert = mysqli_query($connection, $sql);
-
-   if (mysqli_num_rows($sqlInsert)) {
-      $_SESSION["verifiedUserEmail"] = $emailCheck;
-      redirect("change-password.php");
-   } else {
-
-      $sql2 = "SELECT Firstname FROM admin_login WHERE Email = '$emailCheck'";
-      $sqlInsert2 = mysqli_query($connection, $sql2);
-
-      if (mysqli_num_rows($sqlInsert2)) {
-         $_SESSION["verifiedAdminEmail"] = $emailCheck;
-         redirect("change-password.php");
-      } else {
-         $_SESSION["emailNotFound"] = "Yes";
-      }
    }
 }
 
@@ -167,10 +141,10 @@ function passwordChanger($email, $newPassword, $table)
    $sqlInsert = mysqli_query($connection, $sql);
 
    if ($sqlInsert) {
-      $_SESSION["passChangeSuccess"] = "Yes";
+      $_SESSION["passChangeSuccess"] = true;
       header("Refresh:2, url=../../sign-in.php");
    } else {
-      $_SESSION["passChangeFail"] = "Yes";
+      $_SESSION["passChangeFail"] = true;
    }
 
    mysqli_close($connection);

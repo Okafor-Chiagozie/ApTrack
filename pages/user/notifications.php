@@ -17,9 +17,11 @@ include("header.php");
             <hr>
          </section>
             <?php
+            $num = -1;
             $notifications = getUserNotifications($user_details["email"]);
             if($notifications):
                foreach ($notifications as $notification):
+                  $num++;
             ?>
             <section class="container outside">
                <span>
@@ -38,11 +40,9 @@ include("header.php");
                </span>
 
                <section>
-                  <span class="accept" onclick="accept()">Accept</span>
-                  <!-- accept( $num , '$notifyDetails['User_email']', '$notifyDetails['Id']', '$notifyDetails['Team_name']') -->
+                  <span class="accept" onclick="accept(<?= $num ?>, '<?= $user_details['email'] ?>', <?= $notification['team_id'] ?>)">Accept</span>
 
-                  <span class="decline" onclick="">Decline</span>
-                  <!-- decline($num>, '$notifyDetails['User_email']', '$notifyDetails['Id']') -->
+                  <span class="decline" onclick="decline(<?= $num ?>, '<?= $user_details['email'] ?>', <?= $notification['team_id'] ?>)">Decline</span>
                </section>
             </section>
             <?php 
@@ -62,21 +62,27 @@ include("header.php");
 <script src="../../assets/js/dashboard.js"></script>
 <script src="../../assets/libraries/jquery.js"></script>
 <script>
-   async function accept(num, email, id, teamName) {
-      var container = document.getElementsByClassName("container")
-      container[num].style.display = "none"
+   async function accept(num, user_email, team_id) {
+      var container = document.getElementsByClassName("container");
+      
+      var request = await fetch(`../../scripts/async.php?action=accept&userEmail=${user_email}&teamId=${team_id}`);
+      var response = await request.text();
 
-      var result = await fetch(`../../scripts/async.php?action=accept&email=${email}&id=${id}&teamName=${teamName}`);
-      var req = await result.text();
-
-      window.location.href = req.toString();
+      if(response == "Done"){
+         container[num].style.display = "none";
+         window.location.href = "dashboard.php";
+      }      
    }
 
-   async function decline(num, email, id) {
-      var container = document.getElementsByClassName("container")
-      container[num].style.display = "none"
+   async function decline(num, user_email, team_id) {
+      var container = document.getElementsByClassName("container");
+      
+      var request = await fetch(`../../scripts/async.php?action=decline&userEmail=${user_email}&teamId=${team_id}`);
+      var response = await request.text();
 
-      var result = await fetch(`../../scripts/async.php?action=decline&email=${email}&id=${id}`);
+      if(response == "Done"){
+         container[num].style.display = "none";
+      }
    }
 </script>
 

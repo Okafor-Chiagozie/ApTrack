@@ -1,5 +1,7 @@
 <?php
 session_start();
+$_SESSION["forgotPassword"] = true;
+$_SESSION["changePassword"] = false;
 ?>
 
 
@@ -67,9 +69,9 @@ session_start();
                         <input type="password" name="password" required placeholder="Your Password" autocomplete>
                      </section>
 
-                     <?php if (isset($_SESSION["userWrongInfo"]) && ($_SESSION["userWrongInfo"] == "Yes")) {
+                     <?php if (isset($_SESSION["userWrongInfo"]) && $_SESSION["userWrongInfo"]) {
                         echo "<span class='error'>Incorrect email or password</span>";
-                        $_SESSION["userWrongInfo"] = "No";
+                        $_SESSION["userWrongInfo"] = false;
                      } ?>
 
                      <span>
@@ -116,9 +118,9 @@ session_start();
                         <input type="password" name="adminPassword" required placeholder="Your Password" autocomplete>
                      </section>
 
-                     <?php if (isset($_SESSION["adminWrongInfo"]) && ($_SESSION["adminWrongInfo"] == "Yes")) {
+                     <?php if (isset($_SESSION["adminWrongInfo"]) && $_SESSION["adminWrongInfo"]) {
                         echo "<span class='error'>Incorrect email or password</span>";
-                        $_SESSION["adminWrongInfo"] = "No";
+                        $_SESSION["adminWrongInfo"] = false;
                      } ?>
 
                      <span>
@@ -157,14 +159,19 @@ session_start();
       <script src="assets/libraries/toastr.min.js"></script>
       <script src="assets/js/sign-in.js"></script>
       <?php
-      if (isset($_SESSION["regSuccess"]) && ($_SESSION["regSuccess"] == "Yes")) {
+      if (isset($_SESSION["regSuccess"]) && $_SESSION["regSuccess"]) {
          echo "<script> toastr.success('Kindly login to continue.', 'Registration Successful', {timeOut: 5000}) </script>";
-         $_SESSION["regSuccess"] = "No";
+         $_SESSION["regSuccess"] = false;
       }
 
-      if (isset($_SESSION["loginFail"]) && ($_SESSION["LoginFail"] == "Yes")) {
+      if (isset($_SESSION["loginFail"]) && $_SESSION["LoginFail"]) {
          echo "<script> toastr.error('Try logging in again.', 'Login Unsuccessful', {timeOut: 5000}) </script>";
-         $_SESSION["loginFail"] = "No";
+         $_SESSION["loginFail"] = false;
+      }
+
+      if(isset($_SESSION["changePasswordSuccess"]) && $_SESSION["changePasswordSuccess"]){
+         echo "<script> toastr.success('Your password have been changed successfully.', 'Password Change Successful', {timeOut: 5000}) </script>";
+         $_SESSION["changePasswordSuccess"] = false;
       }
       ?>
    </body>

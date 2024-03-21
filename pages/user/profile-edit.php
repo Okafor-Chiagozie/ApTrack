@@ -58,14 +58,14 @@ include("header.php");
    <script src="../../assets/libraries/toastr.min.js"></script>
 
    <?php
-      if(isset($_SESSION["fileSupport"]) && ($_SESSION["fileSupport"] == "Yes")){
+      if(isset($_SESSION["fileSupport"]) && $_SESSION["fileSupport"]){
          echo "<script> toastr.error('Unsupported file format.', 'File Error', {timeOut: 5000}) </script>";
-         $_SESSION["fileSupport"] = "No";
+         $_SESSION["fileSupport"] = false;
       }
 
-      if(isset($_SESSION["updateFailed"]) && ($_SESSION["updateFailed"] == "Yes")){
+      if(isset($_SESSION["updateFailed"]) && $_SESSION["updateFailed"]){
          echo "<script> toastr.error('Profile update failed.', 'Update Error', {timeOut: 5000}) </script>";
-         $_SESSION["updateFailed"] = "No";
+         $_SESSION["updateFailed"] = false;
       }
    ?>
 </div>

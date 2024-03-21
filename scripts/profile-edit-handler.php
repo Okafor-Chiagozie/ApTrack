@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
       // Check for file type
       if(!imageTypeVerifier($picture_file["type"])) {
    
-         $_SESSION["fileSupport"] = "Yes";
+         $_SESSION["fileSupport"] = true;
       }else {
 
          // $picture_name = explode(".", $picture_file["name"])[1];
@@ -46,8 +46,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
    if (empty($_POST["firstname"]) || empty($_POST["lastname"]) 
    || empty($_POST["specialty"]) || empty($picture_name)) {
       
-      $_SESSION["updateFailed"] = "Yes";
+      $_SESSION["updateFailed"] = true;
       redirect("../pages/user/profile-edit.php");
+      return;
    }
 
 
@@ -62,7 +63,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
    if(updateUserProfile($picture_name, $firstname, $lastname, 
    $specialty, $user_details["email"])){
 
-      $_SESSION["updateSuccess"] = "Yes";
+      $_SESSION["updateSuccess"] = true;
       redirect("../pages/user/profile.php");
+      return;
    }
 }

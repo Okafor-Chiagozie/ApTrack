@@ -16,43 +16,37 @@ if ($_REQUEST['action'] === 'teamMemberRequest') {
 }
 
 
-
-
-
-
-
-
-
-
-
 if ($_REQUEST['action'] === 'accept') {
 
-   $email = $_REQUEST["email"];
-   $id = $_REQUEST["id"];
-   $teamName = $_REQUEST["teamName"];
+   $team_id = $_REQUEST["teamId"];
+   $user_email = $_REQUEST["userEmail"];
 
-   $sql1 = "UPDATE user_login set Team_name = '$teamName' WHERE Email = '$email'";
-   $sqlInsert1 = mysqli_query($connection, $sql1);
+   if(acceptTeamRequest($team_id, $user_email) && deleteAllUserNotifications($user_email)){
 
-   $sql2 = "DELETE FROM notify WHERE User_email = '$email';";
-   $sqlInsert2 = mysqli_query($connection, $sql2);
-
-   echo "dashboard.php";
-
-   mysqli_close($connection);
+      echo "Done";
+   }
 }
 
 
 if ($_REQUEST['action'] === 'decline') {
 
-   $email = $_REQUEST["email"];
-   $id = $_REQUEST["id"];
+   $team_id = $_REQUEST["teamId"];
+   $user_email = $_REQUEST["userEmail"];
 
-   $sql3 = "DELETE FROM notify WHERE Id = '$id' ";
-   $sqlInsert3 = mysqli_query($connection, $sql3);
+   if(declineTeamRequest($team_id, $user_email)){
 
-   mysqli_close($connection);
+      echo "Done";
+   }
 }
+
+
+
+
+
+
+
+
+
 
 
 if ($_REQUEST['action'] === 'makeLeader') {

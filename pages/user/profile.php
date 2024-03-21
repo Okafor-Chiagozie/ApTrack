@@ -60,9 +60,9 @@ include("header.php");
    <script src="../../assets/libraries/toastr.min.js"></script>
 
    <?php
-      if(isset($_SESSION["updateSuccess"]) && ($_SESSION["updateSuccess"] == "Yes")){
+      if(isset($_SESSION["updateSuccess"]) && $_SESSION["updateSuccess"]){
          echo "<script> toastr.success('Profile updated successfully.', 'Update Successful', {timeOut: 5000}) </script>";
-         $_SESSION["updateSuccess"] = "No";
+         $_SESSION["updateSuccess"] = false;
       }
    ?>
 </div>

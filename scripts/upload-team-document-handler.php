@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["upload"])) {
       // Check for file type
       if(!zipFileVerifier($document_file["type"])) {
    
-         $_SESSION["fileSupport"] = "Yes";
+         $_SESSION["fileSupport"] = true;
       }else {
 
          // $document_name = explode(".", $document_file["name"])[1];
@@ -44,15 +44,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["upload"])) {
 
    if (empty($document_name)) {
       
-      $_SESSION["uploadFailed"] = "Yes";
+      $_SESSION["uploadFailed"] = true;
       redirect("../pages/user/team-leader-team-page.php");
+      return;
    }
 
 
    // Inserting to the database
    if(uploadTeamDocument($document_name, $user_details["team_id"])){
 
-      $_SESSION["uploadSuccess"] = "Yes";
+      $_SESSION["uploadSuccess"] = true;
       redirect("../pages/user/team-leader-team-page.php");
+      return;
    }
 }

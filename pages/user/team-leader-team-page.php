@@ -99,19 +99,19 @@ if($_SESSION["status"] !== "leader"){
    <script src="../../assets/libraries/toastr.min.js"></script>
 
    <?php
-      if(isset($_SESSION["fileSupport"]) && ($_SESSION["fileSupport"] == "Yes")){
+      if(isset($_SESSION["fileSupport"]) && $_SESSION["fileSupport"]){
             echo "<script> toastr.error('Unsupported file format.', 'File Error', {timeOut: 5000}) </script>";
-            $_SESSION["fileSupport"] = "No";
+            $_SESSION["fileSupport"] = false;
       }
 
-      if(isset($_SESSION["uploadSuccess"]) && ($_SESSION["uploadSuccess"] == "Yes")){
+      if(isset($_SESSION["uploadSuccess"]) && $_SESSION["uploadSuccess"]){
             echo "<script> toastr.success('Team project upload was successful.', 'Upload Successful', {timeOut: 5000}) </script>";
-            $_SESSION["uploadSuccess"] = "No";
+            $_SESSION["uploadSuccess"] = false;
       }
       
-      if(isset($_SESSION["uploadFailed"]) && ($_SESSION["uploadFailed"] == "Yes")){
+      if(isset($_SESSION["uploadFailed"]) && $_SESSION["uploadFailed"]){
             echo "<script> toastr.error('Team project upload was unsuccessful.', 'Upload Unsuccessful', {timeOut: 5000}) </script>";
-            $_SESSION["uploadFailed"] = "No";
+            $_SESSION["uploadFailed"] = false;
       }
    ?>
 </div>

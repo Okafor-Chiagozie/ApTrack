@@ -1,17 +1,11 @@
 <?php
-require("../../scripts/config.php");
-include("../../scripts/functions.php");
 
 session_start();
+include("../../scripts/functions.php");
 
-if (isset($_POST['verifyEmailButton'])) {
-   if (!empty($_POST['emailToCheck'])) {
-
-      $emailToCheck = clean($_POST["emailToCheck"]);
-      emailVerifier($emailToCheck, "user_login");
-   }
+if(!isset($_SESSION["forgotPassword"])){
+   redirect("../../sign-in.php");
 }
-
 ?>
 
 
@@ -57,17 +51,19 @@ if (isset($_POST['verifyEmailButton'])) {
                   <h1>Verify Email</h1>
                </section>
 
-               <form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" class="myForm">
+               <form action="../../scripts/verify-email-handler.php" method="post" class="myForm">
                   <section class="duoFormItem">
                      <section class="formItem">
                         <label for="email">Email</label>
-                        <input type="email" name="emailToCheck" id="email" required placeholder="Your Email">
+                        <input type="email" name="user_email" id="email" required placeholder="Your Email">
                      </section>
-                     <?php if (isset($_SESSION["emailNotFound"]) && ($_SESSION["emailNotFound"] == "Yes")) {
-                        echo "<span class='error'>Email not found</span>";
-                        $_SESSION["emailNotFound"] = "No";
-                     } ?>
-
+                     
+                     <?php if (isset($_SESSION["emailNotFound"]) && $_SESSION["emailNotFound"]): ?>
+                     <span class='error'>Email not found</span>
+                     <?php 
+                     $_SESSION["emailNotFound"] = false;
+                     endif; 
+                     ?>
                      <span>
                         <span></span>
 
@@ -76,7 +72,7 @@ if (isset($_POST['verifyEmailButton'])) {
                   </section>
 
                   <section class="submitButton">
-                     <input type="submit" value="Verify" name="verifyEmailButton">
+                     <input type="submit" value="Verify" name="verifyEmail">
 
                      <span>
                         <span>Don't have an account? <a href="../../index.php">Register</a></span>
@@ -86,7 +82,15 @@ if (isset($_POST['verifyEmailButton'])) {
                
             </div>
          </section>
-
       </div>
+
+      <script src="../../assets/libraries/jquery.js"></script>
+      <script src="../../assets/libraries/toastr.min.js"></script>
+      <?php
+      if (isset($_SESSION["emailVerifyFailed"]) && $_SESSION["emailVerifyFailed"]) {
+         echo "<script> toastr.error('Email verification failed.', 'Verification failed', {timeOut: 5000}) </script>";
+         $_SESSION["emailVerifyFailed"] = false;
+      }
+      ?>
    </body>
 </html>

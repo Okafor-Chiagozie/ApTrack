@@ -2,5 +2,6 @@
 
 session_start();
 session_destroy();
+include("function.php");
 
-header("Location: ../sign-in.php");
+redirect("../sign-in.php");

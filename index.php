@@ -56,9 +56,9 @@ session_start();
                <section class="formItem">
                   <label for="email">Email</label>
                   <input type="email" name="email" required placeholder="Your Email" maxlength="40">
-                  <?php if (isset($_SESSION["emailExists"]) && ($_SESSION["emailExists"] == "Yes")) {
+                  <?php if (isset($_SESSION["emailExists"]) && $_SESSION["emailExists"] ) {
                      echo "<span class='error'>Email already exists</span>";
-                     $_SESSION["emailExists"] = "No";
+                     $_SESSION["emailExists"] = false;
                   } ?>
                </section>
 
@@ -75,9 +75,9 @@ session_start();
                      </section>
                   </section>
                   <?php 
-                     if (isset($_SESSION['differentPassword']) && ($_SESSION["differentPassword"] == "Yes")) {
+                     if (isset($_SESSION['differentPassword']) && $_SESSION["differentPassword"]) {
                      echo "<span class='error'>Both passwords do not match</span>";
-                     $_SESSION["differentPassword"] = "No";
+                     $_SESSION["differentPassword"] = false;
                   }  ?>
 
                   <span>
@@ -117,9 +117,9 @@ session_start();
 
       <!-- Toast alert  -->
       <?php
-      if (isset($_SESSION["regFailed"]) && ($_SESSION["regFailed"] == "Yes")) {
+      if (isset($_SESSION["regFailed"]) && $_SESSION["regFailed"]) {
          echo "<script> toastr.error('You were unable to be registered.', 'Registration Unsuccessful', {timeOut: 5000}) </script>";
-         $_SESSION["regFailed"] = "No";
+         $_SESSION["regFailed"] = false;
       }
       ?>
    </body>

@@ -10,22 +10,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user_login'])) {
 
    if (empty($_POST["email"]) || empty($_POST["password"]) ) {
       
-      $_SESSION["loginFail"] = "Yes";
+      $_SESSION["loginFail"] = true;
       redirect("../index.php");
+      return;
    }
 
    $email = dataSanitizer($_POST["email"]);
    $password = passwordLock(dataSanitizer($_POST["password"]));
-   $password_from_database = emailChecker($email, "users");
+   $password_from_database = emailChecker($email);
    
    if (!$password_from_database){
-      $_SESSION["userWrongInfo"] = "Yes";
+      $_SESSION["userWrongInfo"] = true;
       redirect("../sign-in.php");
+      return;
    }
 
    // For Remember me
    if (isset($_POST["userRemember"])) {
-      $_SESSION["userRemember"] = "Yes";
+      $_SESSION["userRemember"] = true;
    }
 
 

@@ -11,8 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
    if (empty($_POST["username"]) || empty($_POST["email"]) 
    || empty($_POST["password"]) || empty($_POST["confirm"]) ) {
       
-      $_SESSION["regFailed"] = "Yes";
+      $_SESSION["regFailed"] = true;
       redirect("../index.php");
+      return;
    }
 
    // === Username ============
@@ -24,26 +25,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
    // === Email ===============
    $email = dataSanitizer($_POST["email"]);
 
-   if (emailChecker($email, "users")){
-      $_SESSION['emailExists'] = "Yes";
+   if (emailChecker($email)){
+      $_SESSION['emailExists'] = true;
       redirect("../index.php");
+      return;
    }
 
    // === Password ==============
    $password = passwordLock(dataSanitizer($_POST["password"]));
 
    if ($_POST["password"] != $_POST["confirm"]) {
-      $_SESSION['differentPassword'] = "Yes";
+      $_SESSION['differentPassword'] = true;
       redirect("../index.php");
+      return;
    }
    
 
    // === Inserting user data to database =============
    if(addNewUserToDatabase($firstname, $lastname, $email, $password)){
-      $_SESSION["regSuccess"] = "Yes";
+      $_SESSION["regSuccess"] = true;
       redirect("../sign-in.php");
+      return;
    }else {
-      $_SESSION["regFailed"] = "Yes";
+      $_SESSION["regFailed"] = true;
       redirect("../index.php");
+      return;
    }
 }

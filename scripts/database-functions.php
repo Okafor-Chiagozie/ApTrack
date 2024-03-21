@@ -8,18 +8,32 @@
  * @param  string $table
  * @return string
  */
-function emailChecker(string $email, string $table) : ?string
+function emailChecker(string $email) : ?string
 {
    global $connection;
    
-   $query = "SELECT `password` FROM $table WHERE `email` = ?";
+   $query = "SELECT `password` FROM `users` WHERE `email` = ?";
    $stmt = $connection->prepare($query);
    $stmt->bind_param("s", $email);
    $stmt->execute();
    $stmt->bind_result($password);
 
-   if($stmt->fetch())
+   if($stmt->fetch()){
+
       return $password;
+   }else{
+
+      $query = "SELECT `password` FROM `admins` WHERE `email` = ?";
+      $stmt = $connection->prepare($query);
+      $stmt->bind_param("s", $email);
+      $stmt->execute();
+      $stmt->bind_result($password);
+
+      if($stmt->fetch()){
+
+         return $password;
+      }
+   }
 
    return null;
 }
@@ -237,10 +251,9 @@ function getUserNotifications(string $user_email) : ?array
 
    $user_id = getUserId($user_email);
    
-   $query = "SELECT `notifications`.*, `users`.*, `teams`.* FROM `notifications` 
-   JOIN `users` ON `notifications`.`user_id` = `users`.`id`
+   $query = "SELECT `notifications`.*, `teams`.* FROM `notifications` 
    JOIN `teams` ON `notifications`.`team_id` = `teams`.`id`
-   WHERE `user_id` = ? ORDER BY `notifications`.`id` DESC";
+   WHERE `notifications`.`user_id` = ? ORDER BY `notifications`.`id` DESC";
    $stmt = $connection->prepare($query);
    $stmt->bind_param("i", $user_id);
    $stmt->execute();
@@ -376,6 +389,82 @@ function uploadTeamDocument(string $document_name, int $id) : ?bool
    $query = "UPDATE `teams` set `document` = ? WHERE `id` = ?";
    $stmt = $connection->prepare($query);
    $stmt->bind_param("si", $document_name, $id);
+   $result = $stmt->execute();
+   
+   return $result;
+}
+
+
+/**
+ * Accept team membership request
+ *
+ * @param  int $team_id
+ * @param  string $user_email
+ * @return bool
+ */
+function acceptTeamRequest(int $team_id, string $user_email,) : ?bool
+{
+   global $connection;
+   
+   $query = "UPDATE `users` set `team_id` = ? WHERE `email` = ?";
+   $stmt = $connection->prepare($query);
+   $stmt->bind_param("is", $team_id, $user_email);
+   $result = $stmt->execute();
+   
+   return $result;
+}
+
+
+/**
+ * decline team membership request
+ *
+ * @param  int $team_id
+ * @param  string $user_email
+ * @return bool
+ */
+function declineTeamRequest(int $team_id, string $user_email) : ?bool
+{
+   return deleteTeamUserNotification($team_id, $user_email);
+}
+
+
+/**
+ * Delete all notifications for a given user
+ *
+ * @param  string $user_email
+ * @return bool
+ */
+function deleteAllUserNotifications(string $user_email) : ?bool
+{
+   global $connection;
+
+   $user_id = getUserId($user_email);
+
+   $query = "DELETE FROM `notifications` WHERE `user_id` = ?";
+   $stmt = $connection->prepare($query);
+   $stmt->bind_param("i", $user_id);
+   $result = $stmt->execute();
+   
+   return $result;
+}
+
+
+/**
+ * declineTeamRequest
+ *
+ * @param  int $team_id
+ * @param  string $user_email
+ * @return bool
+ */
+function deleteTeamUserNotification(int $team_id, string $user_email) : ?bool
+{
+   global $connection;
+
+   $user_id = getUserId($user_email);
+
+   $query = "DELETE FROM `notifications` WHERE `team_id` = ? AND `user_id` = ? ";
+   $stmt = $connection->prepare($query);
+   $stmt->bind_param("ii", $team_id, $user_id);
    $result = $stmt->execute();
    
    return $result;

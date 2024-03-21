@@ -105,23 +105,25 @@ $_SESSION["changePassword"] = false;
                </form>
 
 
-               <form action="scripts/validate-admin.php" method="post" id="admin" class="myForm">
+               <form action="scripts/admin-login-handler.php" method="post" id="admin" class="myForm">
                   <section class="formItem">
                      <label for="adminEmail">Email</label>
-                     <input type="email" name="adminEmail" required placeholder="Your Email" 
+                     <input type="email" name="email" required placeholder="Your Email" 
                      value="<?php if (isset($_SESSION["adminRemember"])) {echo $_SESSION["adminEmail"]; } ?>">
                   </section>
 
                   <section class="duoFormItem">
                      <section class="formItem">
                         <label for="adminPassword">Password</label>
-                        <input type="password" name="adminPassword" required placeholder="Your Password" autocomplete>
+                        <input type="password" name="password" required placeholder="Your Password" autocomplete>
                      </section>
 
-                     <?php if (isset($_SESSION["adminWrongInfo"]) && $_SESSION["adminWrongInfo"]) {
-                        echo "<span class='error'>Incorrect email or password</span>";
-                        $_SESSION["adminWrongInfo"] = false;
-                     } ?>
+                     <?php if (isset($_SESSION["adminWrongInfo"]) && $_SESSION["adminWrongInfo"]): ?>
+                     <span class='error'>Incorrect email or password</span>
+                     <?php
+                     $_SESSION["adminWrongInfo"] = false;
+                     endif;
+                     ?>
 
                      <span>
                         <span>
@@ -134,7 +136,7 @@ $_SESSION["changePassword"] = false;
                   </section>
 
                   <section class="submitButton">
-                     <input type="submit" value="Login" name="adminLogin">
+                     <input type="submit" value="Login" name="admin_login">
                   </section>
 
                   <section class="orSection">
@@ -164,13 +166,13 @@ $_SESSION["changePassword"] = false;
          $_SESSION["regSuccess"] = false;
       }
 
-      if (isset($_SESSION["loginFail"]) && $_SESSION["LoginFail"]) {
+      if (isset($_SESSION["loginFailed"]) && $_SESSION["loginFailed"]) {
          echo "<script> toastr.error('Try logging in again.', 'Login Unsuccessful', {timeOut: 5000}) </script>";
-         $_SESSION["loginFail"] = false;
+         $_SESSION["loginFailed"] = false;
       }
 
       if(isset($_SESSION["changePasswordSuccess"]) && $_SESSION["changePasswordSuccess"]){
-         echo "<script> toastr.success('Your password have been changed successfully.', 'Password Change Successful', {timeOut: 5000}) </script>";
+         echo "<script> toastr.success('Your password have been changed successfully.', 'Password Changed Successfully', {timeOut: 5000}) </script>";
          $_SESSION["changePasswordSuccess"] = false;
       }
       ?>

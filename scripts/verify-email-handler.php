@@ -21,12 +21,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['verifyEmail'])) {
    if (!emailChecker($email)) {
 
       $_SESSION["emailNotFound"] = true;
-      echo $_SESSION["emailNotFound"];
       redirect("../pages/auth/verify-email.php");
       return;
    }
    
    $_SESSION["verifiedEmail"] = $email;
+   $_SESSION["changePassword"] = true;
    $_SESSION["emailVerifySuccess"] = true;
    redirect("../pages/auth/change-password.php");
 }

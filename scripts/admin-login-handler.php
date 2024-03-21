@@ -8,20 +8,12 @@ include("database-functions.php");
 // Admin email = aptrackadmin@gmail.com
 // Admin password = aptrack123
 
-// $adminEmail = dataSanitizer($_POST["adminEmail"]);
-// $adminPassword = passwordLock(dataSanitizer($_POST["adminPassword"]));
 
-// if(isset($_POST['adminLogin'])){
-//    adminLogin($adminEmail, $adminPassword, "admin_login");
-// }
-
-
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user_login'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['admin_login'])) {
 
    if (empty($_POST["email"]) || empty($_POST["password"]) ) {
       
-      $_SESSION["loginFail"] = true;
+      $_SESSION["loginFailed"] = true;
       redirect("../index.php");
       return;
    }
@@ -30,37 +22,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user_login'])) {
    $password = passwordLock(dataSanitizer($_POST["password"]));
    $password_from_database = emailChecker($email);
    
-   if (!$password_from_database){
-      $_SESSION["userWrongInfo"] = true;
+   if ($password !== $password_from_database){
+      $_SESSION["adminWrongInfo"] = true;
       redirect("../sign-in.php");
       return;
    }
 
    // For Remember me
-   if (isset($_POST["userRemember"])) {
-      $_SESSION["userRemember"] = true;
+   if (isset($_POST["adminRemember"])) {
+      $_SESSION["adminRemember"] = true;
    }
 
-
-   $user_details = getUserDetails($email);
-
-   if ($user_details["team_id"]
-   && $_SESSION["userId"] == $user_details['leader_id']) {
-         
-      // For knowing if the user went through the sign in
-      $_SESSION["userEmail"] = $email;
-      $_SESSION["status"] = "leader";
-
-      // Going to the dashboard
-      redirect("../pages/user/team-leader-dashboard.php");
-      return;
-   }
 
    // For knowing if the user went through the sign in
-   $_SESSION["userEmail"] = $email;
-   $_SESSION["status"] = "user";
+   $_SESSION["adminEmail"] = $email;
+   $_SESSION["status"] = "admin";
 
    // Going to the dashboard
-   redirect("../pages/user/dashboard.php");
+   redirect("../pages/admin/dashboard.php");
 }
+
 

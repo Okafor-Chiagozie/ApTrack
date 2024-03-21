@@ -2,6 +2,5 @@
 
 session_start();
 session_destroy();
-include("function.php");
-
+include("functions.php");
 redirect("../sign-in.php");

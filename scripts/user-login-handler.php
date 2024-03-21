@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user_login'])) {
 
    if (empty($_POST["email"]) || empty($_POST["password"]) ) {
       
-      $_SESSION["loginFail"] = true;
+      $_SESSION["loginFailed"] = true;
       redirect("../index.php");
       return;
    }
@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user_login'])) {
    $password = passwordLock(dataSanitizer($_POST["password"]));
    $password_from_database = emailChecker($email);
    
-   if (!$password_from_database){
+   if ($password !== $password_from_database){
       $_SESSION["userWrongInfo"] = true;
       redirect("../sign-in.php");
       return;

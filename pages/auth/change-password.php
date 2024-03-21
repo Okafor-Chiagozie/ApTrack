@@ -3,51 +3,9 @@
 session_start();
 include("../../scripts/functions.php");
 
-if(!isset($_SESSION["verifiedEmail"])){
+if(!isset($_SESSION["verifiedEmail"]) || !isset($_SESSION["changePassword"])){
    redirect("verify-email.php");
 }
-
-
-// if(isset($_SESSION["verifiedUserEmail"])){
-
-//     if(isset($_POST["newPasswordButton"])){
-
-//         // Email has been cleaned by email_verification
-//         $email = $_SESSION["verifiedUserEmail"];
-    
-//         if(!empty($_POST["newPassword"]) && !empty($_POST["confirmNewPassword"]) && ($_POST["newPassword"] == $_POST["confirmNewPassword"])){
-    
-//             $newPassword = passwordLocker(clean($_POST["newPassword"]));
-    
-//             passwordChanger($email, $newPassword, "user_login");
-    
-//         }else{
-//             $_SESSION["passwordDiffer"] = true;
-//         }
-    
-//     }
-// }else if(isset($_SESSION["verifiedAdminEmail"])){
-//     if(isset($_POST["newPasswordButton"])){
-
-//         // Email has been cleaned by email_verification
-//         $email = $_SESSION["verifiedAdminEmail"];
-    
-//         if(!empty($_POST["newPassword"]) && !empty($_POST["confirmNewPassword"]) && ($_POST["newPassword"] == $_POST["confirmNewPassword"])){
-    
-//             $newPassword = passwordLocker(clean($_POST["newPassword"]));
-    
-//             passwordChanger($email, $newPassword, "admin_login");
-    
-//         }else{
-//             $_SESSION["passwordDiffer"] = true;
-//         }
-    
-//     }
-// }else
-// {
-//    header("Location: verify-email.php");
-// }
-
 ?>
 
 
@@ -107,9 +65,9 @@ if(!isset($_SESSION["verifiedEmail"])){
                      </section>
 
                      <?php if(isset($_SESSION["differentPassword"]) && $_SESSION["differentPassword"]): ?> 
-                     <span class='error'>Both passwords do not match</span>";
+                     <span class='error'>Both passwords do not match</span>
                      <?php 
-                     $_SESSION["passwordDiffer"] = false;
+                     $_SESSION["differentPassword"] = false;
                      endif; 
                      ?>
 
@@ -138,7 +96,7 @@ if(!isset($_SESSION["verifiedEmail"])){
 
       <!-- Toast Alert -->
       <?php
-      if(isset($_SESSION["emailVerifyFailed"]) && $_SESSION["emailVerifyFailed"]){
+      if(isset($_SESSION["emailVerifySuccess"]) && $_SESSION["emailVerifySuccess"]){
          echo "<script> toastr.success('Your email verification was successful.', 'Email Verification Successful', {timeOut: 5000}) </script>";
          $_SESSION["emailVerifySuccess"] = false;
       }

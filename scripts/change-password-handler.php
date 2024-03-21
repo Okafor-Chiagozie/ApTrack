@@ -6,27 +6,34 @@ include("functions.php");
 include("database-functions.php");
 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['verifyEmail'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["change_password"])) {
 
-   if (empty($_POST['user_email'])) {
+   if (empty($_POST["password"]) || empty($_POST["confirm_password"])) {
 
-      $_SESSION["emailVerifyFailed"] = true;
-      redirect("../pages/auth/verify-email.php");
+      $_SESSION["changePasswordFailed"] = true;
+      redirect("../pages/auth/chnage_password.php");
       return;
    }
 
-   $email = dataSanitizer($_POST["user_email"]);
+   $password = dataSanitizer($_POST["password"]);
+   $confirm_password = dataSanitizer($_POST["confirm_password"]);
    
 
-   if (!emailChecker($email)) {
+   if ($password !== $confirm_password) {
 
-      $_SESSION["emailNotFound"] = true;
-      echo $_SESSION["emailNotFound"];
-      redirect("../pages/auth/verify-email.php");
+      $_SESSION["differentPassword"] = true;
+      redirect("../pages/auth/change-password.php");
+      return;
+   }
+
+
+   if(updateUserPassword($_SESSION["verifiedEmailTable"], 
+   passwordLock($password), $_SESSION["verifiedEmail"])){
+
+      $_SESSION["changePasswordSuccess"] = true;
+      redirect("../sign-in.php");
       return;
    }
    
-   $_SESSION["verifiedEmail"] = $email;
-   $_SESSION["emailVerifySuccess"] = true;
-   redirect("../pages/auth/change-password.php");
+   
 }

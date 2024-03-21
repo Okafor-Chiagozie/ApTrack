@@ -19,7 +19,7 @@ function emailChecker(string $email) : ?string
    $stmt->bind_result($password);
 
    if($stmt->fetch()){
-
+      $_SESSION["verifiedEmailTable"] = "users";
       return $password;
    }else{
 
@@ -30,7 +30,7 @@ function emailChecker(string $email) : ?string
       $stmt->bind_result($password);
 
       if($stmt->fetch()){
-
+         $_SESSION["verifiedEmailTable"] = "admins";
          return $password;
       }
    }
@@ -465,6 +465,19 @@ function deleteTeamUserNotification(int $team_id, string $user_email) : ?bool
    $query = "DELETE FROM `notifications` WHERE `team_id` = ? AND `user_id` = ? ";
    $stmt = $connection->prepare($query);
    $stmt->bind_param("ii", $team_id, $user_id);
+   $result = $stmt->execute();
+   
+   return $result;
+}
+
+
+function updateUserPassword(string $table, string $password, string $email) : ?bool
+{
+   global $connection;
+   
+   $query = "UPDATE $table set `password` = ? WHERE `email` = ?";
+   $stmt = $connection->prepare($query);
+   $stmt->bind_param("ss", $password, $email);
    $result = $stmt->execute();
    
    return $result;
